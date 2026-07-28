@@ -1,0 +1,37 @@
+name: Deploy Nexus Brain to Netlify
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Package site
+        run: zip -r site.zip . -x '.git/*' -x '.github/*'
+
+      - name: Deploy to Netlify (create deploy)
+        id: deploy
+        run: |
+          DEPLOY_ID=$(curl -s \
+            -H "Authorization: Bearer ${{ secrets.NETLIFY_AUTH_TOKEN }}" \
+            -H "Content-Type: application/zip" \
+            --data-binary @site.zip \
+            https://api.netlify.com/api/v1/sites/${{ secrets.NETLIFY_SITE_ID }}/deploys \
+            | python3 -c "import sys,json; print(json.load(sys.stdin)['id'])")
+          echo "deploy_id=$DEPLOY_ID" >> "$GITHUB_OUTPUT"
+          echo "created deploy $DEPLOY_ID"
+
+      - name: Promote to production
+        run: |
+          curl -s -X PUT \
+            -H "Authorization: Bearer ${{ secrets.NETLIFY_AUTH_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d "{\"published_deploy\":\"${{ steps.deploy.outputs.deploy_id }}\"}" \
+            https://api.netlify.com/api/v1/sites/${{ secrets.NETLIFY_SITE_ID }}
+          echo "promoted to production"
