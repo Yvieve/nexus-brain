@@ -2,7 +2,8 @@
 <html lang="zh-CN" data-theme="dark">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#070b12" />
 <title>Nexus Brain · VectorOptics 资源共享平台</title>
 <meta name="description" content="组织资源共享平台：公共部门版块 + 私人空间，自由上传，AI 检索问答、重复检测、未答收集。" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -194,7 +195,103 @@
   .month-rope{font-size:13.5px;color:var(--muted);margin-top:8px}
   .btn:disabled{opacity:.5;cursor:not-allowed}
 
-  @media(max-width:900px){.app-grid{grid-template-columns:1fr}.col-side{position:static}.nav-links{display:none}.reticle-bg{display:none}.notif-panel{position:fixed;top:64px;right:12px;left:12px;width:auto}.assist-panel{bottom:84px}}
+  /* ===== 响应式适配（平板 → 手机 → 小屏 → 横屏 → 触屏） ===== */
+
+  /* 触屏设备：加大可点区域，去掉 hover 位移 */
+  @media(hover:none) and (pointer:coarse){
+    .btn{padding:11px 16px;min-height:44px}
+    .icon-btn{width:44px;height:44px}
+    .btab{padding:10px 15px;min-height:40px}
+    .card:hover{transform:none}
+    .btn:hover{transform:none}
+    .assist-fab:hover{transform:none}
+  }
+
+  /* 平板及以下 */
+  @media(max-width:900px){
+    .app-grid{grid-template-columns:1fr}
+    .col-side{position:static}
+    .nav-links{display:none}
+    .reticle-bg{display:none}
+    .notif-panel{position:fixed;top:calc(64px + env(safe-area-inset-top));right:12px;left:12px;width:auto}
+    .assist-panel{bottom:84px}
+  }
+
+  /* 手机 */
+  @media(max-width:640px){
+    .wrap{padding:0 16px}
+    /* 导航：品牌副标题隐藏，按钮精简 */
+    .nav-in{height:58px;gap:8px}
+    .brand{font-size:15px;gap:8px}
+    .brand small{display:none}
+    .reticle{width:24px;height:24px}
+    .nav-actions{gap:6px}
+    .nav-actions .btn{padding:8px 11px;font-size:13px;min-height:40px}
+    .nav-actions .icon-btn{width:40px;height:40px}
+    #gameBtn{font-size:12px;padding:8px 9px}
+    .nav-actions a.btn.primary{display:none} /* 「进入→」在手机上省掉，靠滚动即可 */
+    header.nav{padding-top:env(safe-area-inset-top)}
+    /* hero */
+    .hero{padding:34px 0 18px}
+    h1.hero-title{font-size:clamp(27px,8vw,34px)}
+    .hero-sub{font-size:15px;margin-top:14px}
+    .pill{font-size:11px;padding:5px 11px;margin-bottom:14px}
+    section.block{padding:28px 0}
+    .app-head{margin-bottom:16px}
+    .app-head h2{font-size:22px}
+    /* 版块标签：单行横滑（13 个部门不再挤成一坨） */
+    .boardtabs{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:6px;margin-left:-16px;margin-right:-16px;padding-left:16px;padding-right:16px;scroll-snap-type:x proximity}
+    .boardtabs::-webkit-scrollbar{display:none}
+    .btab{flex:0 0 auto;white-space:nowrap;scroll-snap-align:start}
+    #feat .boardtabs{flex-wrap:wrap;overflow:visible;margin:0;padding:0;justify-content:center}
+    /* 资源卡片单列 */
+    .items{grid-template-columns:1fr;gap:12px}
+    .card{padding:14px 15px}
+    .panel{padding:16px;border-radius:14px}
+    .qa-input,.field input,.field textarea,.field select,.ap-input input{font-size:16px} /* ≥16px 防 iOS 聚焦自动放大 */
+    .unans-list{max-height:240px}
+    /* 弹窗：底部弹层样式，圆角朝上 */
+    .modal{padding:0;place-items:end center}
+    .card-modal{width:100%;max-width:100%;border-radius:18px 18px 0 0;padding:22px 18px calc(20px + env(safe-area-inset-bottom));max-height:92dvh}
+    .modal-foot{position:sticky;bottom:0;background:var(--bg-2);padding-top:10px;margin-top:14px}
+    .modal-foot .btn{flex:1;justify-content:center}
+    .type-row{flex-wrap:wrap}
+    .type-chip{min-width:30%}
+    /* 抽屉：全屏 */
+    .drawer{width:100vw;border-left:none}
+    .db{padding:18px 16px calc(18px + env(safe-area-inset-bottom))}
+    .db-actions .btn{flex:1;justify-content:center}
+    /* AI 助手：面板近全屏 */
+    .assist-fab{right:14px;bottom:calc(14px + env(safe-area-inset-bottom));width:54px;height:54px;font-size:23px}
+    .assist-panel{right:8px;left:8px;width:auto;bottom:calc(78px + env(safe-area-inset-bottom));height:min(72dvh,560px)}
+    .msg{max-width:92%}
+    /* 通知 / 成就 / 页脚 */
+    .notif-panel{max-height:60dvh}
+    .grid{grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:9px}
+    .game-tabs{flex-wrap:wrap}
+    .gtab{min-width:31%}
+    .foot-in{flex-direction:column;align-items:flex-start}
+    .toast{bottom:calc(88px + env(safe-area-inset-bottom));width:calc(100vw - 32px);text-align:center}
+    footer{padding-bottom:calc(34px + env(safe-area-inset-bottom))}
+  }
+
+  /* 小屏手机（iPhone SE / 折叠屏外屏等） */
+  @media(max-width:380px){
+    .brand div{font-size:13px}
+    .nav-actions .btn{padding:7px 8px;font-size:12px}
+    #gameBtn{padding:7px 8px} /* 保留成就入口，仅压缩 */
+    h1.hero-title{font-size:24px}
+    .type-chip{min-width:100%}
+    .grid{grid-template-columns:repeat(3,1fr)}
+  }
+
+  /* 手机横屏：弹窗与助手面板限高 */
+  @media(max-height:480px) and (orientation:landscape){
+    .card-modal{max-height:96dvh;border-radius:16px;width:min(560px,96vw)}
+    .modal{place-items:center}
+    .assist-panel{height:88dvh;bottom:8px;right:8px;width:min(420px,60vw);left:auto}
+    .hero{padding:22px 0 12px}
+  }
 </style>
 </head>
 <body>
@@ -739,7 +836,7 @@ function recordUnans(q){
 
 /* ===================== theme ===================== */
 const themeBtn=document.getElementById("themeBtn"),themeIcon=document.getElementById("themeIcon");
-function applyTheme(t){document.documentElement.setAttribute("data-theme",t);themeIcon.innerHTML=t==="dark"?'<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>':'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>';try{localStorage.setItem("nx-theme",t);}catch(e){}}
+function applyTheme(t){document.documentElement.setAttribute("data-theme",t);themeIcon.innerHTML=t==="dark"?'<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>':'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>';try{localStorage.setItem("nx-theme",t);}catch(e){}const tc=document.querySelector('meta[name="theme-color"]');if(tc)tc.setAttribute("content",t==="dark"?"#070b12":"#f3f6fb");}
 themeBtn.onclick=()=>applyTheme(document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark");
 
 /* ===================== toast ===================== */
