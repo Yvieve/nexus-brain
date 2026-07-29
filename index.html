@@ -781,9 +781,14 @@ try {
   sb = supabase.createClient(SUP.SUPABASE_URL, SUP.SUPABASE_ANON_KEY);
 } catch (e) {
   console.warn("[NEXUS] Supabase init failed, running in offline-safe mode:", e);
+  var _sb_resolve = { data: [], error: null };
   var _sb_chain = new Proxy(function(){}, {
-    get: function(){ return _sb_chain; },
-    apply: function(){ return Promise.resolve({ data: [], error: null }); }
+    get: function(t, prop){
+      if (prop === "then") return function(res){ return res(_sb_resolve); };
+      if (prop === Symbol.asyncIterator) return undefined;
+      return _sb_chain;
+    },
+    apply: function(){ return _sb_chain; }
   });
   sb = {
     from: function(){ return _sb_chain; },
