@@ -194,11 +194,16 @@
   .prog>i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2));width:0;transition:.4s}
   .month-rope{font-size:13.5px;color:var(--muted);margin-top:8px}
   /* 积分与成就 区块 */
-  .rule-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-top:6px}
-  .rule{display:flex;align-items:center;gap:10px;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:12px 14px;font-size:14px;line-height:1.3}
-  .rule b{color:var(--accent);font-size:18px;min-width:42px;font-variant-numeric:tabular-nums}
-  .r-emoji{font-size:20px;min-width:26px;text-align:center}
-  .month-callout{margin-top:26px;background:linear-gradient(180deg,rgba(244,63,94,.10),rgba(244,63,94,.04));border:1px solid rgba(244,63,94,.28);border-radius:14px;padding:16px 18px;font-size:14.5px;line-height:1.6}
+  .rule-wrap{max-width:880px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+  .rule-row{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+  .rlab{flex:0 0 auto;width:58px;font-size:12.5px;font-weight:700;color:var(--muted);letter-spacing:1px}
+  .chip{display:inline-flex;align-items:center;gap:6px;background:var(--panel);border:1px solid var(--border);border-radius:999px;padding:7px 13px;font-size:13px;line-height:1;white-space:nowrap}
+  .chip b{color:var(--accent);font-weight:700}
+  .chip .em{font-size:15px}
+  .month-line{margin-top:2px;background:linear-gradient(180deg,rgba(244,63,94,.10),rgba(244,63,94,.04));border:1px solid rgba(244,63,94,.28);border-radius:12px;padding:13px 16px;font-size:14px;text-align:center}
+  .month-line b{color:var(--accent-2)}
+  .demo-badge{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.5px;color:#ffb454;background:rgba(255,180,84,.14);border:1px solid rgba(255,180,84,.4);border-radius:6px;padding:2px 7px;margin-left:8px;vertical-align:middle}
+  .demo-note{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted);background:var(--accent-soft);border:1px solid var(--border);border-radius:10px;padding:9px 14px;margin-bottom:18px}
   .btn:disabled{opacity:.5;cursor:not-allowed}
 
   /* ===== 响应式适配（平板 → 手机 → 小屏 → 横屏 → 触屏） ===== */
@@ -369,6 +374,7 @@
       <div><div class="kicker">资源库</div><h2>公共部门版块 + 私人空间</h2></div>
       <button class="btn primary" id="uploadBtn">＋ 上传资料</button>
     </div>
+    <div class="demo-note">📌 带「<b style="color:var(--text)">示例</b>」标签的为<b style="color:var(--text)">演示数据</b>，用于展示平台能力，可随意删除或替换。</div>
     <div class="boardtabs" id="boardTabs"></div>
     <div class="items" id="items"></div>
   </div>
@@ -397,40 +403,37 @@
       <p class="muted" style="max-width:660px;margin:10px auto 0;line-height:1.6">每次贡献都会转化为积分，解锁徽章与角色；每月集齐目标还能兑换维特币 🪙。点右上角「🏅 成就」可查看你的实时进度。</p>
     </div>
 
-    <h3 style="margin:6px 0 12px;font-size:17px">怎么赚积分</h3>
-    <div class="rule-grid">
-      <div class="rule"><b>+5</b><span>每日登录</span></div>
-      <div class="rule"><b>+5</b><span>上传到私人空间</span></div>
-      <div class="rule"><b>+10</b><span>上传到公共版块</span></div>
-      <div class="rule"><b>+15</b><span>把私人资料提升到公共区</span></div>
-      <div class="rule"><b>+8</b><span>更新一条已有资料</span></div>
-      <div class="rule"><b>+20</b><span>解答一个待解答问题</span></div>
+    <div class="rule-wrap">
+      <div class="rule-row">
+        <span class="rlab">获取积分</span>
+        <span class="chip"><b>+5</b> 每日登录</span>
+        <span class="chip"><b>+5</b> 私人上传</span>
+        <span class="chip"><b>+10</b> 公共上传</span>
+        <span class="chip"><b>+15</b> 提升公共</span>
+        <span class="chip"><b>+8</b> 更新资料</span>
+        <span class="chip"><b>+20</b> 解答问题</span>
+      </div>
+      <div class="rule-row">
+        <span class="rlab">徽章</span>
+        <span class="chip"><span class="em">🌟</span>新星</span>
+        <span class="chip"><span class="em">🤝</span>共享者</span>
+        <span class="chip"><span class="em">🛠️</span>修缮者</span>
+        <span class="chip"><span class="em">💡</span>解疑者</span>
+        <span class="chip"><span class="em">🔥</span>活跃</span>
+        <span class="chip"><span class="em">🏆</span>全勤</span>
+      </div>
+      <div class="rule-row">
+        <span class="rlab">角色</span>
+        <span class="chip"><span class="em">🦊</span>狐狐 <b>100</b></span>
+        <span class="chip"><span class="em">🐧</span>企鹅 <b>250</b></span>
+        <span class="chip"><span class="em">🦁</span>狮王 <b>450</b></span>
+        <span class="chip"><span class="em">🐉</span>神龙 <b>700</b></span>
+        <span class="chip"><span class="em">🤖</span>Nexus <b>1000</b></span>
+      </div>
+      <div class="month-line">🎯 <b>月度挑战</b>：集齐 6 枚徽章 或 解锁 5 个角色 → 兑换 <b>20 维特币 🪙</b>（每月一次）</div>
     </div>
 
-    <h3 style="margin:26px 0 12px;font-size:17px">徽章（6 枚）</h3>
-    <div class="rule-grid">
-      <div class="rule"><span class="r-emoji">🌟</span><span>新星 · 完成首次上传</span></div>
-      <div class="rule"><span class="r-emoji">🤝</span><span>共享者 · 提升到公共区</span></div>
-      <div class="rule"><span class="r-emoji">🛠️</span><span>修缮者 · 更新已有资料</span></div>
-      <div class="rule"><span class="r-emoji">💡</span><span>解疑者 · 解答一个问题</span></div>
-      <div class="rule"><span class="r-emoji">🔥</span><span>活跃 · 累计登录 3 天</span></div>
-      <div class="rule"><span class="r-emoji">🏆</span><span>全勤 · 覆盖全部 13 部门</span></div>
-    </div>
-
-    <h3 style="margin:26px 0 12px;font-size:17px">角色（按积分解锁）</h3>
-    <div class="rule-grid">
-      <div class="rule"><span class="r-emoji">🦊</span><span>狐狐 · 100 分</span></div>
-      <div class="rule"><span class="r-emoji">🐧</span><span>企鹅 · 250 分</span></div>
-      <div class="rule"><span class="r-emoji">🦁</span><span>狮王 · 450 分</span></div>
-      <div class="rule"><span class="r-emoji">🐉</span><span>神龙 · 700 分</span></div>
-      <div class="rule"><span class="r-emoji">🤖</span><span>Nexus · 1000 分</span></div>
-    </div>
-
-    <div class="month-callout">
-      🎯 <b>月度挑战</b>：每月集齐全部 6 枚徽章，或解锁全部 5 个角色，即可在当月兑换 <b>20 维特币 🪙</b>（每月限一次）。
-    </div>
-
-    <div style="text-align:center;margin-top:24px">
+    <div style="text-align:center;margin-top:22px">
       <button class="btn primary" id="gameJumpBtn" onclick="document.getElementById('gameBtn').click()">查看我的成就 →</button>
     </div>
   </div>
@@ -570,6 +573,18 @@ const SEED_DOCS=[
   {dept:"物流",icon:"⏱️",title:"发货时效承诺与异常升级",tags:["发货","时效","异常"],owner:"孙立",summary:"国内 48 小时发货承诺与延误升级路径。",body:"国内订单 48 小时内发出，超时系统自动预警；延误 >24 小时升级物流主管，>48 小时通知客服主动安抚客户并补偿。"},
 ];
 
+// 演示数据：带「示例」标签，用于展示平台能力，可随意删除或替换
+const DEMO_DOCS=[
+  {dept:"财务",icon:"🧾",title:"差旅报销常见问答",tags:["示例","报销","FAQ"],owner:"演示·小陈",summary:"演示数据：差旅报销高频问题速查。",body:"Q：打车费能否报销？A：市内交通凭票实报，单张不超过 200 元；Q：超标住宿怎么办？A：需事前在 OA 提交审批；Q：餐补如何发放？A：按 100 元/天包干，随工资发放。"},
+  {dept:"行政",icon:"🏢",title:"新人入职物品领取清单",tags:["示例","入职","行政"],owner:"演示·小郑",summary:"演示数据：新员工首周领取与办理事项。",body:"工牌、电脑、门禁在行政前台领取；邮箱与 OA 账号由 IT 开通；工位绿植可至前台自选；第 3 天安排部门导师 1v1。"},
+  {dept:"国际电子商务",icon:"🌍",title:"亚马逊新品上架检查表",tags:["示例","亚马逊","上架"],owner:"演示·小林",summary:"演示数据：Listing 上架前 12 项自查。",body:"主图白底 1600px、五点描述含关键词、类目节点正确、变体关系完整、A+ 页面已挂、价格与库存同步、退货设置合规、禁限售词排查。"},
+  {dept:"视觉设计",icon:"🎨",title:"社媒封面图模板（演示）",tags:["示例","封面","模板"],owner:"演示·小何",summary:"演示数据：双微一抖通用封面尺寸参考。",body:"公众号 900×383、微博 1000×500、抖音 1125×1500；主标题 ≤10 字，品牌 logo 右下角留白；配色遵循 VI 主色光学青。"},
+  {dept:"数字营销",icon:"📈",title:"信息流广告周度复盘模板",tags:["示例","投放","复盘"],owner:"演示·小赵",summary:"演示数据：渠道 ROI 周度复盘口径。",body:"按「渠道 × 系列」拆分花费/CTR/CVR/ROI；ROI<1.5 暂停复盘；素材每周上新 ≥4 组 A/B；周报周四 12 点前归档。"},
+  {dept:"产品",icon:"📋",title:"用户访谈记录（演示）",tags:["示例","调研","访谈"],owner:"演示·小周",summary:"演示数据：轻量化诉求访谈摘录。",body:"受访 8 人普遍希望减重与长续航；对价格敏感度中等；期待更多场景化配件；多数愿为「快充 + 轻量」溢价 15%。"},
+  {dept:"仓储",icon:"📦",title:"旺季备货安全库存测算",tags:["示例","备货","库存"],owner:"演示·小孙",summary:"演示数据：大促前安全库存示例计算。",body:"安全库存 = 日均销量 × 补货周期 × 1.3；美西海运约 20 天，旺季提前 45 天下单；A 类物料每周复盘一次。"},
+  {dept:"物流",icon:"🚚",title:"异常订单处理 SOP（演示）",tags:["示例","物流","异常"],owner:"演示·小孙",summary:"演示数据：延误与破损的处理路径。",body:"延误 >24h 升级主管，>48h 通知客服安抚并补偿；破损留证开 8D，48h 内围堵；含电池产品走认证渠道并附 MSDS。"}
+];
+
 /* state */
 let CURRENT_USER=null;
 let activeBoard="全部";
@@ -591,25 +606,48 @@ function rowToItem(r){
     isPublic: r.zone!=="private",
     type: r.type==="doc"?"text":(r.type==="img"?"image":"file"),
     fileName:r.file_name||"", dataUrl:r.file_url||"", fileUrl:r.file_url||"",
-    owner:(up&&up.nickname)||r.owner_name||"匿名", uploader:r.uploader_id||(up?up.id:null),
+    owner:(up&&up.nickname)||meta.owner||"匿名", uploader:up?up.id:null,
     createdAt:new Date(r.created_at).getTime(), updatedAt:new Date(r.updated_at).getTime(),
     version:r.version||1
   };
 }
 
 async function ensureDemoSeed(){
-  const {count}=await sb.from('resources').select('*',{count:'exact',head:true});
-  if(count&&count>0) return;
-  const owners=[...new Set(SEED_DOCS.map(d=>d.owner))];
-  for(const name of owners){ await sb.from('profiles').upsert({nickname:name,color:'#C8102E'},{onConflict:'nickname'}); }
-  const {data:profs}=await sb.from('profiles').select('id,nickname').in('nickname',owners);
-  const idOf={}; (profs||[]).forEach(p=>idOf[p.nickname]=p.id);
-  const rows=SEED_DOCS.map(d=>({
-    type:'doc', title:d.title, content:d.body, zone:'public', dept:d.dept,
-    uploader:idOf[d.owner], owner_name:d.owner, version:1,
-    history:{tags:d.tags,summary:d.summary}
-  }));
-  await sb.from('resources').insert(rows);
+  try{
+    const {data:mk}=await sb.from('settings').select('value').eq('key','seed_docs_v1').maybeSingle();
+    if(!mk){
+      const owners=[...new Set(SEED_DOCS.map(d=>d.owner))];
+      for(const name of owners){ await sb.from('profiles').upsert({nickname:name,color:'#C8102E'},{onConflict:'nickname'}); }
+      const {data:profs}=await sb.from('profiles').select('id,nickname').in('nickname',owners);
+      const idOf={}; (profs||[]).forEach(p=>idOf[p.nickname]=p.id);
+      const rows=SEED_DOCS.map(d=>({
+        type:'doc', title:d.title, content:d.body, zone:'public', dept:d.dept,
+        uploader:idOf[d.owner], version:1,
+        history:{tags:d.tags,summary:d.summary,owner:d.owner}
+      }));
+      await sb.from('resources').insert(rows);
+      await sb.from('settings').upsert({key:'seed_docs_v1',value:'1'},{onConflict:'key'});
+    }
+  }catch(e){ console.warn('base seed skipped',e); }
+  await ensureDemoDocs();
+}
+// 注入带「示例」标注的演示数据（带去重保护，避免重复写入）
+async function ensureDemoDocs(){
+  try{
+    const {data:mk}=await sb.from('settings').select('value').eq('key','demo_docs_v1').maybeSingle();
+    if(mk) return;
+    const owners=[...new Set(DEMO_DOCS.map(d=>d.owner))];
+    for(const name of owners){ await sb.from('profiles').upsert({nickname:name,color:'#7c8aa0'},{onConflict:'nickname'}); }
+    const {data:profs}=await sb.from('profiles').select('id,nickname').in('nickname',owners);
+    const idOf={}; (profs||[]).forEach(p=>idOf[p.nickname]=p.id);
+    const rows=DEMO_DOCS.map(d=>({
+      type:'doc', title:d.title, content:d.body, zone:'public', dept:d.dept,
+      uploader:idOf[d.owner], version:1,
+      history:{tags:d.tags,summary:d.summary,owner:d.owner}
+    }));
+    await sb.from('resources').insert(rows);
+    await sb.from('settings').upsert({key:'demo_docs_v1',value:'1'},{onConflict:'key'});
+  }catch(e){ console.warn('demo docs seed skipped',e); }
 }
 
 async function refreshItems(){
@@ -709,7 +747,7 @@ function renderItems(){
     const img=it.type==="image"&&it.dataUrl?`<img class="img-thumb" src="${it.dataUrl}" alt="">`:"";
     const snippet=it.type==="image"?(it.content||"图片资料"):(it.summary||(it.content||"").slice(0,90));
     c.innerHTML=`<div class="top"><span class="dept-badge ${it.board===PRIV?'priv':''}">${icon} ${boardLabel}</span><span class="muted" style="font-size:12px">${rel(it.createdAt)}</span></div>
-      <h3>${it.title}${it.version>1?`<span class="ver">v${it.version}</span>`:""}</h3>
+      <h3>${it.title}${(it.tags&&it.tags.includes("示例"))?`<span class="demo-badge">示例</span>`:""}${it.version>1?`<span class="ver">v${it.version}</span>`:""}</h3>
       <p>${snippet}</p>${img}
       <div class="foot"><span class="owner"><span class="av">${(it.owner||"?").slice(0,1)}</span>${it.owner}</span><span>${it.type==="image"?"图片":it.type==="file"?"文件":(it.tags||[]).map(t=>"#"+t).join(" ")}</span></div>`;
     c.onclick=()=>openItem(it);
@@ -858,13 +896,12 @@ document.getElementById("upSubmit").onclick=async ()=>{
       const {data}=await sb.from('resources').update({
         title, content, file_name:fileName, file_url:fileUrl||null,
         type:typeForDb, dept: board===PRIV?null:board, zone: board===PRIV?'private':'public',
-        owner_name:CURRENT_USER, version:(sim.it.version||1)+1, updated_at:new Date().toISOString(),
-        history:{tags:sim.it.tags||[],summary:sim.it.summary||""}
+        version:(sim.it.version||1)+1, updated_at:new Date().toISOString(),
+        history:{tags:sim.it.tags||[],summary:sim.it.summary||"",owner:sim.it.owner||CURRENT_USER}
       }).eq('id',sim.it.id).select('*, uploader:profiles(id,nickname)');
       if(data&&data[0]){const idx=items.findIndex(x=>x.id===sim.it.id); if(idx>=0)items[idx]=rowToItem(data[0]);}
-      if(sim.it.uploader && sim.it.uploader!==CURRENT_USER_ID){ await dbPushNotif("🔄 "+(CURRENT_USER||"有人")+" 更新了你上传的《"+title+"》", sim.it.uploader); }
       award(8,"更新了已有资料");earnBadge("fix");
-      await refreshItems();renderItems();toast("已更新《"+title+"》并通知原上传人 "+sim.it.owner);
+      await refreshItems();renderItems();toast("已更新《"+title+"》");
       finishUpload();
     }, ()=>{ addItem({title,content,fileName,fileUrl,board,type:upType,owner:CURRENT_USER}); });
   } else { addItem({title,content,fileName,fileUrl,board,type:upType,owner:CURRENT_USER}); }
@@ -876,8 +913,7 @@ async function addItem(p){
     zone: p.board===PRIV?'private':'public',
     dept: p.board===PRIV?null:p.board,
     file_name:p.fileName||"", file_url:p.fileUrl||null,
-    uploader: CURRENT_USER_ID, owner_name:p.owner||CURRENT_USER||"匿名",
-    version:1, history:{tags:[],summary:""}
+    uploader: CURRENT_USER_ID, version:1, history:{tags:[],summary:"",owner:p.owner||CURRENT_USER||"匿名"}
   };
   const {data}=await sb.from('resources').insert(row).select('*, uploader:profiles(id,nickname)');
   let newItem=null;
