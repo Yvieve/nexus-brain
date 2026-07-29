@@ -416,10 +416,10 @@
   }
 
   /* ===== onboarding ===== */
-  .ob-shade{position:fixed;inset:0;z-index:94;background:transparent}
-  .ob-spot{position:fixed;border-radius:16px;box-shadow:0 0 0 9999px rgba(3,7,13,.66),0 0 0 3px var(--accent),0 0 30px var(--glow);pointer-events:none;transition:all .42s cubic-bezier(.4,0,.2,1);z-index:95;display:none}
+  .ob-shade{position:fixed;inset:0;z-index:9994;background:transparent}
+  .ob-spot{position:fixed;border-radius:16px;box-shadow:0 0 0 9999px rgba(3,7,13,.66),0 0 0 3px var(--accent),0 0 30px var(--glow);pointer-events:none;transition:all .42s cubic-bezier(.4,0,.2,1);z-index:9995;display:none}
   [data-theme="light"] .ob-spot{box-shadow:0 0 0 9999px rgba(30,50,80,.32),0 0 0 3px var(--accent),0 0 24px var(--glow)}
-  .ob-tip{position:fixed;z-index:96;width:min(348px,92vw);background:var(--panel);backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px) saturate(150%);border:1px solid var(--border-strong);border-radius:var(--radius-sm);padding:22px 24px;box-shadow:var(--shadow);display:none;transition:all .42s cubic-bezier(.4,0,.2,1)}
+  .ob-tip{position:fixed;z-index:9996;width:min(348px,92vw);background:var(--panel);backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px) saturate(150%);border:1px solid var(--border-strong);border-radius:var(--radius-sm);padding:22px 24px;box-shadow:var(--shadow);display:none;transition:all .42s cubic-bezier(.4,0,.2,1)}
   .ob-tip-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
   .ob-kick{color:var(--accent);font-size:11.5px;letter-spacing:2.2px;text-transform:uppercase;font-weight:700}
   .ob-skip{background:none;border:none;color:var(--muted);font-size:12.5px;cursor:pointer;font-family:inherit;padding:4px 6px;border-radius:8px;transition:.2s}
@@ -773,7 +773,25 @@
 <script>
 /* ===================== Supabase 连接 ===================== */
 const SUP = window.NEXUS_CONFIG || {SUPABASE_URL:"https://tmqtlvjpftqfvcblearm.supabase.co",SUPABASE_ANON_KEY:"sb_publishable_G8vvJj6hQJcAW2Oj3TYnaA_gzi99Ioo"};
-const sb = supabase.createClient(SUP.SUPABASE_URL, SUP.SUPABASE_ANON_KEY);
+let sb = null;
+try {
+  if (typeof supabase === "undefined" || !supabase || !supabase.createClient) {
+    throw new Error("supabase client not available");
+  }
+  sb = supabase.createClient(SUP.SUPABASE_URL, SUP.SUPABASE_ANON_KEY);
+} catch (e) {
+  console.warn("[NEXUS] Supabase init failed, running in offline-safe mode:", e);
+  var _sb_chain = new Proxy(function(){}, {
+    get: function(){ return _sb_chain; },
+    apply: function(){ return Promise.resolve({ data: [], error: null }); }
+  });
+  sb = {
+    from: function(){ return _sb_chain; },
+    rpc: function(){ return _sb_chain; },
+    auth: new Proxy({}, { get: function(){ return function(){ return Promise.resolve({ data: null, error: null }); }; } }),
+    storage: { from: function(){ return _sb_chain; } }
+  };
+}
 
 /* ===================== data ===================== */
 const PUBLIC_BOARDS=["财务","行政","国际电子商务","视觉设计","渠道发展","品牌与社交媒体","产品","数字营销","国内电子商务","仓储","采购","质检","物流"];
@@ -1738,43 +1756,50 @@ document.getElementById("learnModal").addEventListener("click",e=>{ if(e.target=
       elDots.appendChild(d);
     }
   }
+  function positionNow(){
+    if(!active) return false;
+    var st=steps[idx];
+    var el=document.querySelector(st.sel);
+    if(!el) return false;
+    var r=el.getBoundingClientRect();
+    var pad=st.pad||12;
+    spot.style.top=(r.top-pad)+"px";
+    spot.style.left=(r.left-pad)+"px";
+    spot.style.width=(r.width+pad*2)+"px";
+    spot.style.height=(r.height+pad*2)+"px";
+    var tw=tip.offsetWidth, th=tip.offsetHeight;
+    var vw=window.innerWidth, vh=window.innerHeight;
+    var top,left;
+    var pos=st.pos||"bottom";
+    if(pos==="bottom"){ top=r.bottom+pad+14; left=r.left; }
+    else if(pos==="top"){ top=r.top-pad-14-th; left=r.left; }
+    else if(pos==="left"){ left=r.left-pad-14-tw; top=r.top; }
+    else { left=r.right+pad+14; top=r.top; }
+    if(left<14) left=14;
+    if(left+tw>vw-14) left=vw-tw-14;
+    if(top<14) top=14;
+    if(top+th>vh-14) top=vh-th-14;
+    tip.style.top=top+"px";
+    tip.style.left=left+"px";
+    elTitle.textContent=st.title;
+    elBody.textContent=st.body;
+    elKick.textContent="第 "+(idx+1)+" / "+steps.length+" 步";
+    buildDots();
+    btnPrev.style.visibility = idx===0 ? "hidden":"visible";
+    btnNext.textContent = idx===steps.length-1 ? "完成 ✓":"下一步 →";
+    return true;
+  }
   function place(){
     var st=steps[idx];
     var el=document.querySelector(st.sel);
     if(!el){ next(); return; }
     try{ el.scrollIntoView({behavior:"smooth",block:st.block||"center"}); }catch(e){}
-    setTimeout(function(){
-      if(!active) return;
-      var r=el.getBoundingClientRect();
-      var pad=st.pad||12;
-      spot.style.top=(r.top-pad)+"px";
-      spot.style.left=(r.left-pad)+"px";
-      spot.style.width=(r.width+pad*2)+"px";
-      spot.style.height=(r.height+pad*2)+"px";
-      var tw=tip.offsetWidth, th=tip.offsetHeight;
-      var vw=window.innerWidth, vh=window.innerHeight;
-      var top,left;
-      var pos=st.pos||"bottom";
-      if(pos==="bottom"){ top=r.bottom+pad+14; left=r.left; }
-      else if(pos==="top"){ top=r.top-pad-14-th; left=r.left; }
-      else if(pos==="left"){ left=r.left-pad-14-tw; top=r.top; }
-      else { left=r.right+pad+14; top=r.top; }
-      if(left<14) left=14;
-      if(left+tw>vw-14) left=vw-tw-14;
-      if(top<14) top=14;
-      if(top+th>vh-14) top=vh-th-14;
-      tip.style.top=top+"px";
-      tip.style.left=left+"px";
-      elTitle.textContent=st.title;
-      elBody.textContent=st.body;
-      elKick.textContent="第 "+(idx+1)+" / "+steps.length+" 步";
-      buildDots();
-      btnPrev.style.visibility = idx===0 ? "hidden":"visible";
-      btnNext.textContent = idx===steps.length-1 ? "完成 ✓":"下一步 →";
-    }, 380);
+    positionNow();
+    requestAnimationFrame(function(){ positionNow(); });
+    setTimeout(positionNow, 420);
   }
-  function show(){ active=true; idx=0; shade.style.display="block"; spot.style.display="block"; tip.style.display="block"; }
-  function start(){ if(wel) wel.classList.remove("open"); if(active) return; show(); place(); }
+  function show(){ active=true; idx=0; if(wel){ wel.classList.remove("open"); wel.style.display="none"; } shade.style.display="block"; spot.style.display="block"; tip.style.display="block"; positionNow(); }
+  function start(){ if(wel){ wel.classList.remove("open"); wel.style.display="none"; } if(active) return; show(); place(); }
   function stop(){ active=false; shade.style.display="none"; spot.style.display="none"; tip.style.display="none"; try{ localStorage.setItem(KEY,"1"); }catch(e){} }
   function next(){ if(idx<steps.length-1){ idx++; place(); } else { stop(); if(window.toast) toast("引导完成，开始探索吧 🚀"); } }
   function prev(){ if(idx>0){ idx--; place(); } }
