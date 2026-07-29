@@ -414,6 +414,36 @@
     .assist-panel{height:88dvh;bottom:8px;right:8px;width:min(420px,60vw);left:auto}
     .hero{padding:24px 0 14px}
   }
+
+  /* ===== onboarding ===== */
+  .ob-shade{position:fixed;inset:0;z-index:94;background:transparent}
+  .ob-spot{position:fixed;border-radius:16px;box-shadow:0 0 0 9999px rgba(3,7,13,.66),0 0 0 3px var(--accent),0 0 30px var(--glow);pointer-events:none;transition:all .42s cubic-bezier(.4,0,.2,1);z-index:95;display:none}
+  [data-theme="light"] .ob-spot{box-shadow:0 0 0 9999px rgba(30,50,80,.32),0 0 0 3px var(--accent),0 0 24px var(--glow)}
+  .ob-tip{position:fixed;z-index:96;width:min(348px,92vw);background:var(--panel);backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px) saturate(150%);border:1px solid var(--border-strong);border-radius:var(--radius-sm);padding:22px 24px;box-shadow:var(--shadow);display:none;transition:all .42s cubic-bezier(.4,0,.2,1)}
+  .ob-tip-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+  .ob-kick{color:var(--accent);font-size:11.5px;letter-spacing:2.2px;text-transform:uppercase;font-weight:700}
+  .ob-skip{background:none;border:none;color:var(--muted);font-size:12.5px;cursor:pointer;font-family:inherit;padding:4px 6px;border-radius:8px;transition:.2s}
+  .ob-skip:hover{color:var(--text);background:var(--panel-2)}
+  .ob-tip h3{font-size:18px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px;line-height:1.35}
+  .ob-tip p{font-size:14px;color:var(--muted);line-height:1.7}
+  .ob-dots{display:flex;gap:7px;margin:16px 0 16px}
+  .ob-dot{height:6px;flex:1;background:var(--border-strong);border-radius:4px;transition:.3s}
+  .ob-dot.on{background:linear-gradient(90deg,var(--accent),var(--accent-2));box-shadow:0 0 8px var(--glow)}
+  .ob-actions{display:flex;gap:10px}
+  .ob-actions .btn{flex:1;justify-content:center;padding:10px 14px}
+  .ob-welcome .card-modal{width:min(540px,100%);padding:34px 38px}
+  .ob-welcome .pill{margin-bottom:18px}
+  .ob-welcome h2{font-size:27px;font-weight:700;letter-spacing:-.6px;margin-bottom:4px}
+  .ob-welcome .ob-line{height:3px;width:56px;background:linear-gradient(90deg,var(--accent),var(--accent-2));border-radius:3px;margin:16px 0 18px}
+  .ob-welcome p{color:var(--muted);font-size:14.5px;line-height:1.75}
+  .ob-welcome .ob-feat{display:flex;flex-direction:column;gap:12px;margin:20px 0 26px}
+  .ob-welcome .ob-feat div{display:flex;gap:11px;align-items:flex-start;font-size:13.5px;color:var(--text);line-height:1.5}
+  .ob-welcome .ob-feat b{color:var(--accent);font-weight:600}
+  .ob-welcome .ob-feat .ic{font-size:17px;line-height:1.3}
+  .ob-welcome .modal-foot{display:flex;gap:10px;margin-top:4px}
+  .ob-welcome .modal-foot .btn{flex:1;justify-content:center;padding:12px}
+  @media(max-width:640px){.ob-tip{left:50%!important;right:auto!important;transform:translateX(-50%);bottom:18px!important;top:auto!important;width:92vw}.ob-spot{transition:none}}
+  @media(prefers-reduced-motion:reduce){.ob-spot,.ob-tip{transition:none}}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -435,6 +465,9 @@
       </button>
       <button class="icon-btn" id="themeBtn" title="切换主题" aria-label="切换主题">
         <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <button class="icon-btn" id="obHelpBtn" title="新手引导" aria-label="新手引导">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>
       </button>
       <a class="btn primary" href="#app">进入 →</a>
       <div class="notif-panel" id="notifPanel"><div class="np-head"><span>通知中心</span><span id="notifCount" class="muted"></span></div><div id="notifItems"></div></div>
@@ -1640,6 +1673,124 @@ document.getElementById("learnModal").addEventListener("click",e=>{ if(e.target=
   if(u){ CURRENT_USER=u; renderUser(); showPrivate(); await loginAs(u); }
   try{const t=localStorage.getItem("nx-theme")||"dark";applyTheme(t);}catch(e){applyTheme("dark");}
   updateGameNav();
+})();
+
+/* ===================== onboarding tour ===================== */
+(function(){
+  var KEY="nx-onboarded";
+  var html=''
+    +'<div class="modal ob-welcome" id="obWelcome"><div class="card-modal">'
+    +'<span class="pill"><span class="dot"></span>新手引导</span>'
+    +'<h2>欢迎来到 NEXUS BRAIN 👋</h2>'
+    +'<div class="ob-line"></div>'
+    +'<p>这里是团队的活知识库：上传即沉淀，问 AI 即得答案，知识随时间自然生长。花 60 秒，带你认一遍核心功能。</p>'
+    +'<div class="ob-feat">'
+    +'<div><span class="ic">🤖</span><span><b>问 AI</b> · 跨版块检索并标注来源作答</span></div>'
+    +'<div><span class="ic">📚</span><span><b>资源库</b> · 13 个公共版块 + 你的私人空间</span></div>'
+    +'<div><span class="ic">🧠</span><span><b>AI 智能</b> · 可信度 / 过期 / 合并 / 成长</span></div>'
+    +'<div><span class="ic">🏅</span><span><b>积分成就</b> · 贡献越多，徽章越亮，跨设备同步</span></div>'
+    +'</div>'
+    +'<div class="modal-foot"><button class="btn ghost" id="obDismiss">直接体验</button><button class="btn primary" id="obStartTour">开始引导 →</button></div>'
+    +'</div></div>'
+    +'<div class="ob-shade" id="obShade"></div>'
+    +'<div class="ob-spot" id="obSpot"></div>'
+    +'<div class="ob-tip" id="obTip">'
+    +'<div class="ob-tip-head"><span class="ob-kick" id="obKick">STEP</span><button class="ob-skip" id="obSkip">跳过 ✕</button></div>'
+    +'<h3 id="obTitle"></h3>'
+    +'<p id="obBody"></p>'
+    +'<div class="ob-dots" id="obDots"></div>'
+    +'<div class="ob-actions"><button class="btn ghost" id="obPrev">← 上一步</button><button class="btn primary" id="obNext">下一步 →</button></div>'
+    +'</div>';
+  document.body.insertAdjacentHTML("beforeend", html);
+
+  var steps=[
+    {sel:"#heroSearch",title:"问 AI 任何问题",body:"在搜索框输入问题，回车或点「问 AI」即可跨版块检索资料，并给出带来源的答案。",pos:"bottom",block:"center",pad:12},
+    {sel:"#app",title:"资源库",body:"13 个公共部门版块 + 你的私人空间都在这里。用版块标签切换，点「＋ 上传」沉淀资料。",pos:"top",block:"start",pad:14},
+    {sel:"#uploadBtn",title:"上传即沉淀",body:"文字、文件、图片都能贡献。上传到公共版块共享给团队，或存进私人空间。",pos:"bottom",block:"center",pad:12},
+    {sel:"#proactiveInsights",title:"AI 主动洞察",body:"AI 主动监测知识库，提醒你过期、重复、热点——它不只是回答问题，更帮公司让知识保值增值。",pos:"top",block:"center",pad:14},
+    {sel:"#ai",title:"AI 智能层",body:"可信度、知识过期复核、合并建议、成长曲线——四个维度让知识持续被经营。",pos:"top",block:"start",pad:14},
+    {sel:"#timeline",title:"知识时间线",body:"按时间回看团队知识的沉淀脉络，看清哪块积累厚、哪块还薄弱。",pos:"top",block:"start",pad:14},
+    {sel:"#kgSvg",title:"知识图谱",body:"同部门、共享标签、高相似的内容自动连成网络，帮你看清知识结构。",pos:"top",block:"center",pad:14},
+    {sel:"#game",title:"积分与成就",body:"贡献、被引用、回答被采纳都会累积积分，解锁徽章，且跨设备同步。",pos:"top",block:"start",pad:14},
+    {sel:"#loginBtn",title:"登录即协作",body:"用昵称 + 邀请码登录后，才能上传、提问，并看到你的私人空间。",pos:"bottom",block:"center",pad:12}
+  ];
+  var idx=0, active=false;
+  var shade=document.getElementById("obShade");
+  var spot=document.getElementById("obSpot");
+  var tip=document.getElementById("obTip");
+  var elTitle=document.getElementById("obTitle");
+  var elBody=document.getElementById("obBody");
+  var elKick=document.getElementById("obKick");
+  var elDots=document.getElementById("obDots");
+  var btnPrev=document.getElementById("obPrev");
+  var btnNext=document.getElementById("obNext");
+  var btnSkip=document.getElementById("obSkip");
+  var wel=document.getElementById("obWelcome");
+  var btnStart=document.getElementById("obStartTour");
+  var btnDismiss=document.getElementById("obDismiss");
+  var btnHelp=document.getElementById("obHelpBtn");
+
+  function buildDots(){
+    elDots.innerHTML="";
+    for(var i=0;i<steps.length;i++){
+      var d=document.createElement("div");
+      d.className="ob-dot"+(i===idx?" on":"");
+      elDots.appendChild(d);
+    }
+  }
+  function place(){
+    var st=steps[idx];
+    var el=document.querySelector(st.sel);
+    if(!el){ next(); return; }
+    try{ el.scrollIntoView({behavior:"smooth",block:st.block||"center"}); }catch(e){}
+    setTimeout(function(){
+      if(!active) return;
+      var r=el.getBoundingClientRect();
+      var pad=st.pad||12;
+      spot.style.top=(r.top-pad)+"px";
+      spot.style.left=(r.left-pad)+"px";
+      spot.style.width=(r.width+pad*2)+"px";
+      spot.style.height=(r.height+pad*2)+"px";
+      var tw=tip.offsetWidth, th=tip.offsetHeight;
+      var vw=window.innerWidth, vh=window.innerHeight;
+      var top,left;
+      var pos=st.pos||"bottom";
+      if(pos==="bottom"){ top=r.bottom+pad+14; left=r.left; }
+      else if(pos==="top"){ top=r.top-pad-14-th; left=r.left; }
+      else if(pos==="left"){ left=r.left-pad-14-tw; top=r.top; }
+      else { left=r.right+pad+14; top=r.top; }
+      if(left<14) left=14;
+      if(left+tw>vw-14) left=vw-tw-14;
+      if(top<14) top=14;
+      if(top+th>vh-14) top=vh-th-14;
+      tip.style.top=top+"px";
+      tip.style.left=left+"px";
+      elTitle.textContent=st.title;
+      elBody.textContent=st.body;
+      elKick.textContent="第 "+(idx+1)+" / "+steps.length+" 步";
+      buildDots();
+      btnPrev.style.visibility = idx===0 ? "hidden":"visible";
+      btnNext.textContent = idx===steps.length-1 ? "完成 ✓":"下一步 →";
+    }, 380);
+  }
+  function show(){ active=true; idx=0; shade.style.display="block"; spot.style.display="block"; tip.style.display="block"; }
+  function start(){ if(wel) wel.classList.remove("open"); if(active) return; show(); place(); }
+  function stop(){ active=false; shade.style.display="none"; spot.style.display="none"; tip.style.display="none"; try{ localStorage.setItem(KEY,"1"); }catch(e){} }
+  function next(){ if(idx<steps.length-1){ idx++; place(); } else { stop(); if(window.toast) toast("引导完成，开始探索吧 🚀"); } }
+  function prev(){ if(idx>0){ idx--; place(); } }
+
+  if(btnNext) btnNext.onclick=next;
+  if(btnPrev) btnPrev.onclick=prev;
+  if(btnSkip) btnSkip.onclick=stop;
+  if(btnStart) btnStart.onclick=start;
+  if(btnDismiss) btnDismiss.onclick=function(){ if(wel) wel.classList.remove("open"); try{localStorage.setItem(KEY,"1");}catch(e){} };
+  if(btnHelp) btnHelp.onclick=function(){ if(!active) start(); };
+  if(wel) wel.addEventListener("click",function(e){ if(e.target===wel){ try{localStorage.setItem(KEY,"1");}catch(_){} wel.classList.remove("open"); } });
+  window.addEventListener("resize",function(){ if(active) place(); });
+  window.addEventListener("keydown",function(e){ if(active&&e.key==="Escape") stop(); });
+
+  var done=false; try{ done=localStorage.getItem(KEY)==="1"; }catch(e){}
+  if(!done){ setTimeout(function(){ if(wel) wel.classList.add("open"); }, 800); }
 })();
 </script>
 </body>
