@@ -416,7 +416,7 @@
   }
 
   /* ===== onboarding ===== */
-  .ob-shade{position:fixed;inset:0;z-index:9994;background:transparent}
+  .ob-shade{position:fixed;inset:0;z-index:9994;background:transparent;display:none}
   .ob-spot{position:fixed;border-radius:16px;box-shadow:0 0 0 9999px rgba(3,7,13,.66),0 0 0 3px var(--accent),0 0 30px var(--glow);pointer-events:none;transition:all .42s cubic-bezier(.4,0,.2,1);z-index:9995;display:none}
   [data-theme="light"] .ob-spot{box-shadow:0 0 0 9999px rgba(30,50,80,.32),0 0 0 3px var(--accent),0 0 24px var(--glow)}
   .ob-tip{position:fixed;z-index:9996;width:min(348px,92vw);background:var(--panel);backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px) saturate(150%);border:1px solid var(--border-strong);border-radius:var(--radius-sm);padding:22px 24px;box-shadow:var(--shadow);display:none;transition:all .42s cubic-bezier(.4,0,.2,1)}
@@ -431,6 +431,7 @@
   .ob-dot.on{background:linear-gradient(90deg,var(--accent),var(--accent-2));box-shadow:0 0 8px var(--glow)}
   .ob-actions{display:flex;gap:10px}
   .ob-actions .btn{flex:1;justify-content:center;padding:10px 14px}
+  .ob-welcome{z-index:9000}
   .ob-welcome .card-modal{width:min(540px,100%);padding:34px 38px}
   .ob-welcome .pill{margin-bottom:18px}
   .ob-welcome h2{font-size:27px;font-weight:700;letter-spacing:-.6px;margin-bottom:4px}
