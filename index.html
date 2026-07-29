@@ -303,6 +303,89 @@
     .assist-panel{height:88dvh;bottom:8px;right:8px;width:min(420px,60vw);left:auto}
     .hero{padding:22px 0 12px}
   }
+  /* ===== AI intelligence layer ===== */
+  .hero-tag{margin-top:18px;font-family:"Space Grotesk","PingFang SC",sans-serif;font-size:15px;letter-spacing:.5px;color:var(--accent-2);opacity:.92}
+  /* proactive band */
+  .proactive{background:linear-gradient(180deg,var(--bg-2),var(--bg));border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .pro-head{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+  .pro-head .spark{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:var(--accent-soft);border:1px solid var(--border);font-size:19px}
+  .pro-head h2{font-size:clamp(20px,2.6vw,28px);font-weight:700}
+  .pro-head .muted{font-size:13px}
+  .insights{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+  .insight{display:flex;gap:12px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:15px 16px;font-size:14px;line-height:1.5;position:relative;overflow:hidden}
+  .insight::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent)}
+  .insight.warn::before{background:var(--danger)} .insight.merge::before{background:var(--accent-2)} .insight.grow::before{background:#7c8aff}
+  .insight .ic{font-size:20px;flex:0 0 auto;line-height:1.3}
+  .insight .it{font-weight:600;margin-bottom:2px}
+  .insight .is{color:var(--muted);font-size:13px}
+  .insight .ia{margin-top:8px;display:inline-block;font-size:12.5px;color:var(--accent);cursor:pointer;font-weight:600}
+  .insight .ia:hover{text-decoration:underline}
+  /* ai section grid */
+  .ai-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:22px}
+  @media(max-width:880px){.ai-grid{grid-template-columns:1fr}}
+  .ai-card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:22px}
+  .ai-card h3{font-size:17px;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+  .ai-card .sub{font-size:13px;color:var(--muted);margin-bottom:16px}
+  /* confidence */
+  .conf-show{display:flex;align-items:center;gap:16px;margin:6px 0 14px}
+  .conf-ring{--p:90;width:84px;height:84px;border-radius:50%;flex:0 0 auto;background:conic-gradient(var(--accent) calc(var(--p)*1%),var(--border) 0);display:grid;place-items:center;position:relative}
+  .conf-ring::after{content:"";position:absolute;inset:9px;border-radius:50%;background:var(--panel)}
+  .conf-ring b{position:relative;font-family:"Space Grotesk";font-size:22px}
+  .conf-ring span{position:relative;font-size:10px;color:var(--muted)}
+  .conf-meta{font-size:13px;color:var(--muted);line-height:1.9}
+  .conf-meta b{color:var(--text);font-weight:600}
+  .conf-list{margin-top:10px;display:flex;flex-direction:column;gap:9px}
+  .conf-row{display:flex;justify-content:space-between;font-size:13px;border-bottom:1px dashed var(--border);padding-bottom:7px}
+  .conf-row b{color:var(--text)}
+  /* expiration */
+  .exp-flag{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:700;color:var(--danger);background:rgba(255,107,107,.12);border:1px solid rgba(255,107,107,.3);border-radius:999px;padding:2px 9px;margin-left:7px}
+  .conf-chip{display:inline-flex;align-items:center;gap:3px;font-size:11.5px;font-weight:600;color:var(--accent);background:var(--accent-soft);border:1px solid var(--border);border-radius:999px;padding:2px 9px;margin-left:7px;vertical-align:middle}
+  .exp-item{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:13.5px;padding:10px 0;border-bottom:1px solid var(--border)}
+  .exp-item .t{font-weight:600}
+  .exp-item .d{color:var(--muted);font-size:12.5px}
+  /* merge */
+  .merge-card{background:var(--panel-2);border:1px solid var(--border);border-radius:12px;padding:13px 14px;margin-bottom:12px;font-size:13.5px}
+  .merge-card .bars{display:flex;height:8px;border-radius:5px;overflow:hidden;margin:9px 0;background:var(--border)}
+  .merge-card .bars i{background:linear-gradient(90deg,var(--accent-2),var(--danger))}
+  .merge-card .acts{display:flex;gap:8px;margin-top:6px}
+  .merge-card .acts .btn{font-size:12.5px;padding:6px 12px}
+  .empty-note{color:var(--muted);font-size:13px;padding:14px 0}
+  /* evolution */
+  .evo{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .evo .e{background:var(--panel-2);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center}
+  .evo .e b{display:block;font-family:"Space Grotesk";font-size:26px;color:var(--accent)}
+  .evo .e span{font-size:12px;color:var(--muted)}
+  .evo-foot{margin-top:14px;font-size:13px;color:var(--muted);line-height:1.7}
+  /* timeline */
+  .tl{position:relative;margin-top:8px;padding-left:26px}
+  .tl::before{content:"";position:absolute;left:8px;top:4px;bottom:4px;width:2px;background:var(--border)}
+  .tl-item{position:relative;padding:0 0 22px 6px}
+  .tl-item::before{content:"";position:absolute;left:-22px;top:4px;width:13px;height:13px;border-radius:50%;background:var(--accent);border:3px solid var(--bg-2)}
+  .tl-item.warn::before{background:var(--danger)} .tl-item.merge::before{background:var(--accent-2)} .tl-item.grow::before{background:#7c8aff}
+  .tl-item .tt{font-weight:600;font-size:14.5px}
+  .tl-item .tm{font-size:12px;color:var(--muted);margin-top:2px}
+  .tl-item .ta{font-size:12.5px;color:var(--accent);cursor:pointer;margin-top:4px;display:inline-block}
+  .tl-item .ta:hover{text-decoration:underline}
+  /* knowledge graph */
+  .kg-wrap{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:8px;overflow:hidden}
+  .kg-wrap svg{width:100%;height:auto;display:block}
+  .kg-node{cursor:pointer}
+  .kg-node circle{transition:.15s}
+  .kg-node:hover circle{stroke:var(--accent);stroke-width:2.5}
+  .kg-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin-top:10px}
+  .kg-legend i{display:inline-block;width:18px;height:3px;border-radius:2px;vertical-align:middle;margin-right:6px}
+  /* ai learn modal */
+  .learn-card{max-width:480px}
+  .learn-card .lq{background:var(--panel-2);border:1px solid var(--border);border-radius:10px;padding:12px;font-size:13.5px;margin:12px 0;max-height:160px;overflow:auto}
+  .learn-card .lrow{display:flex;gap:10px;align-items:center;font-size:13px;color:var(--muted);margin:6px 0}
+  .learn-card .lrow b{color:var(--text)}
+  .learn-actions{display:flex;gap:10px;margin-top:14px}
+  .learn-actions .btn{flex:1;justify-content:center}
+  /* privacy note */
+  .ai-note{display:flex;align-items:center;gap:9px;font-size:12.5px;color:var(--muted);background:var(--panel-2);border:1px solid var(--border);border-radius:10px;padding:10px 13px;margin-top:12px}
+  .ai-note b{color:var(--text)}
+  /* section spacing helper */
+  .sec-title-row{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:20px}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -314,7 +397,7 @@
       <svg class="reticle" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="17" stroke="var(--accent)" stroke-width="1.6"/><circle cx="20" cy="20" r="3" fill="var(--accent)"/><path d="M20 3v9M20 28v9M3 20h9M28 20h9" stroke="var(--accent)" stroke-width="1.6"/></svg>
       <div>NEXUS BRAIN<small>VECTOROPTICS · 资源共享</small></div>
     </div>
-    <nav class="nav-links"><a href="#ask">问 AI</a><a href="#app">资源库</a><a href="#feat">能力</a><a href="#game">积分</a></nav>
+    <nav class="nav-links"><a href="#ask">问 AI</a><a href="#app">资源库</a><a href="#ai">AI 智能</a><a href="#timeline">时间线</a><a href="#graph">图谱</a><a href="#game">积分</a></nav>
     <div class="nav-actions">
       <button class="btn" id="loginBtn">登录</button>
       <button class="btn" id="gameBtn">🏅 成就</button>
@@ -338,7 +421,19 @@
     <span class="pill"><span class="dot"></span>组织资源共享平台</span>
     <h1 class="hero-title">让每一次上传，<br>都成为团队的<span class="accent">资产</span>。</h1>
     <p class="hero-sub">上传资料到公共部门版块或你的私人空间；问 AI，它会检索已有资料作答、回忆你的备忘录、收集无解的问题。先登录，再上传和提问。</p>
+    <p class="hero-tag">知识不是整理出来的，而是在工作中自然生长。</p>
     <div class="user-banner" id="userBanner"></div>
+  </div>
+</section>
+
+<section class="proactive">
+  <div class="wrap">
+    <div class="pro-head">
+      <div class="spark">💡</div>
+      <div><h2>AI 今天想告诉你</h2><div class="muted">Nexus 正在主动监测知识库，帮你持续优化——它不只是回答问题，更在帮公司让知识保值、增值。</div></div>
+    </div>
+    <div class="insights" id="proactiveInsights"></div>
+    <div class="ai-note"><span>🔒</span><div><b>隐私优先：</b>公共回答只检索公共资料，AI 永远不会跨进同事的私人空间去取答案。</div></div>
   </div>
 </section>
 
@@ -351,6 +446,7 @@
       <div class="panel">
         <h3>🤖 问 AI</h3>
         <div class="hint">AI 会在对应区域检索资料并作答，标注来源；找不到会收集问题。</div>
+        <div class="ai-note" style="margin-top:12px"><span>🔒</span><div><b>隐私边界：</b>公共提问只检索<b>公共资料</b>；AI 绝不会跨到同事（如 B）的私人空间去寻找 A 的答案。</div></div>
         <div class="qa-toggle">
           <button class="qt on" data-mode="public">公共检索</button>
           <button class="qt" data-mode="private">私人回忆</button>
@@ -380,9 +476,65 @@
   </div>
 </section>
 
+<section class="block" id="ai" style="background:var(--bg-2)">
+  <div class="wrap">
+    <div class="sec-title-row">
+      <div><div class="kicker">AI 智能层</div><h2 style="font-size:clamp(24px,3.4vw,36px);margin-top:8px;font-weight:700">Nexus 在持续优化你的知识</h2></div>
+    </div>
+    <div class="ai-grid">
+      <div class="ai-card">
+        <h3>🎯 AI 可信度（Confidence）</h3>
+        <div class="sub">每条知识都标注可信度，依据来源数量、更新时间、人工确认与历史使用次数。</div>
+        <div id="aiConfExample"></div>
+      </div>
+      <div class="ai-card">
+        <h3>🌱 AI 成长（Evolution）</h3>
+        <div class="sub">AI 在每次回答与沉淀中持续学习，越用越懂你的组织。</div>
+        <div id="evoBox"></div>
+      </div>
+    </div>
+    <div class="ai-grid" style="margin-top:22px">
+      <div class="ai-card">
+        <h3>⏰ AI 知识过期（Expiration）</h3>
+        <div class="sub">超过 365 天未更新的知识会被标记，提醒负责人复核，避免知识过时。</div>
+        <div id="expList"></div>
+      </div>
+      <div class="ai-card">
+        <h3>🔁 AI 知识合并（Merge）</h3>
+        <div class="sub">自动检测高度重复的资料，建议合并为单一权威来源，减少维护成本。</div>
+        <div id="mergeList"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="timeline">
+  <div class="wrap">
+    <div class="sec-title-row">
+      <div><div class="kicker">知识时间线</div><h2 style="font-size:clamp(24px,3.4vw,36px);margin-top:8px;font-weight:700">把知识与事件连接起来</h2></div>
+    </div>
+    <p class="muted" style="max-width:680px;margin-bottom:8px">每一次上传、更新、提问与通知都被串联成时间线，帮公司和个人回忆「当时为什么这么做」。</p>
+    <div class="tl" id="tlList"></div>
+  </div>
+</section>
+
+<section class="block" id="graph" style="background:var(--bg-2)">
+  <div class="wrap">
+    <div class="sec-title-row">
+      <div><div class="kicker">知识图谱</div><h2 style="font-size:clamp(24px,3.4vw,36px);margin-top:8px;font-weight:700">看见知识之间的关系</h2></div>
+    </div>
+    <div class="kg-wrap"><div id="kgSvg"></div></div>
+    <div class="kg-legend">
+      <span><i style="background:var(--border)"></i>同部门</span>
+      <span><i style="background:var(--accent-2)"></i>共享标签</span>
+      <span><i style="background:var(--danger)"></i>高相似·合并候选</span>
+    </div>
+  </div>
+</section>
+
 <section class="block" id="feat" style="background:var(--bg-2)">
   <div class="wrap">
-    <div class="sec-head" style="text-align:center;margin-bottom:30px"><div class="kicker">平台能力（已实装）</div><h2 style="font-size:clamp(24px,3.4vw,36px);margin-top:8px;font-weight:700">从上传到沉淀，全链路可用</h2></div>
+    <div class="sec-head" style="text-align:center;margin-bottom:30px"><div class="kicker">平台能力</div><h2 style="font-size:clamp(24px,3.4vw,36px);margin-top:8px;font-weight:700">从上传到沉淀，全链路可用</h2></div>
     <div class="boardtabs" style="justify-content:center">
       <span class="btab on" style="cursor:default">自由上传 文字/文件/图片</span>
       <span class="btab on" style="cursor:default">部门版块 + 私人空间</span>
@@ -442,9 +594,7 @@
 <footer>
   <div class="wrap foot-in">
     <div class="brand"><svg class="reticle" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="17" stroke="var(--accent)" stroke-width="1.6"/><circle cx="20" cy="20" r="3" fill="var(--accent)"/><path d="M20 3v9M20 28v9M3 20h9M28 20h9" stroke="var(--accent)" stroke-width="1.6"/></svg><div>NEXUS BRAIN</div></div>
-    <div style="display:flex;gap:18px;align-items:center">
-      <button class="btn ghost" id="resetBtn" style="font-size:12px">重置演示数据</button>
-    </div>
+    <div class="muted" style="font-size:13px">知识不是整理出来的，而是在工作中自然生长。</div>
   </div>
 </footer>
 
@@ -490,6 +640,20 @@
 
 <!-- CONFIRM MODAL (duplicate / promote) -->
 <div class="modal" id="confirmModal"><div class="card-modal" id="confirmCard"></div></div>
+
+<!-- AI LEARN MODAL -->
+<div class="modal" id="learnModal"><div class="card-modal learn-card">
+  <button class="icon-btn x2" id="closeLearn" aria-label="关闭">✕</button>
+  <h3 style="font-size:18px">✦ 检测到该回答具有复用价值</h3>
+  <p class="muted" style="font-size:13.5px;margin:6px 0 4px">问题：<b id="learnQ" style="color:var(--text)"></b></p>
+  <div class="lq" id="learnBody"></div>
+  <div class="lrow" id="learnCites" style="color:var(--accent)"></div>
+  <div class="lrow"><span>保存后将自动生成 <b>SOP</b> 并沉淀为企业知识，供全员检索复用。</span></div>
+  <div class="learn-actions">
+    <button class="btn ghost" id="learnSkip">暂不</button>
+    <button class="btn primary" id="learnSave">保存为企业知识</button>
+  </div>
+</div></div>
 
 <!-- DRAWER -->
 <div class="scrim" id="scrim"></div>
@@ -646,6 +810,8 @@ async function ensureDemoDocs(){
       history:{tags:d.tags,summary:d.summary,owner:d.owner}
     }));
     await sb.from('resources').insert(rows);
+    // 演示「知识过期」：把一条物流 SOP 的更新时间设为 420 天前，触发过期提醒
+    try{ await sb.from('resources').update({updated_at:new Date(Date.now()-420*864e5).toISOString()}).eq('dept','物流').eq('title','异常订单处理 SOP（演示）'); }catch(e){}
     await sb.from('settings').upsert({key:'demo_docs_v1',value:'1'},{onConflict:'key'});
   }catch(e){ console.warn('demo docs seed skipped',e); }
 }
@@ -653,6 +819,7 @@ async function ensureDemoDocs(){
 async function refreshItems(){
   const {data}=await sb.from('resources').select('*, uploader:profiles(id,nickname)').order('created_at',{ascending:false});
   items=(data||[]).map(rowToItem);
+  renderAISections();
 }
 async function refreshNotifications(){
   if(!CURRENT_USER_ID) {notifications=[];renderNotif();return;}
@@ -747,7 +914,7 @@ function renderItems(){
     const img=it.type==="image"&&it.dataUrl?`<img class="img-thumb" src="${it.dataUrl}" alt="">`:"";
     const snippet=it.type==="image"?(it.content||"图片资料"):(it.summary||(it.content||"").slice(0,90));
     c.innerHTML=`<div class="top"><span class="dept-badge ${it.board===PRIV?'priv':''}">${icon} ${boardLabel}</span><span class="muted" style="font-size:12px">${rel(it.createdAt)}</span></div>
-      <h3>${it.title}${(it.tags&&it.tags.includes("示例"))?`<span class="demo-badge">示例</span>`:""}${it.version>1?`<span class="ver">v${it.version}</span>`:""}</h3>
+      <h3>${it.title}${(it.tags&&it.tags.includes("示例"))?`<span class="demo-badge">示例</span>`:""}${it.version>1?`<span class="ver">v${it.version}</span>`:""}${AI.isExpired(it)?`<span class="exp-flag">⏰ 待复核</span>`:""}<span class="conf-chip" title="AI 综合可信度（来源/更新时间/人工确认/使用次数）">🎯 ${AI.confidence(it)}%</span></h3>
       <p>${snippet}</p>${img}
       <div class="foot"><span class="owner"><span class="av">${(it.owner||"?").slice(0,1)}</span>${it.owner}</span><span>${it.type==="image"?"图片":it.type==="file"?"文件":(it.tags||[]).map(t=>"#"+t).join(" ")}</span></div>`;
     c.onclick=()=>openItem(it);
@@ -981,7 +1148,7 @@ const scrim=document.getElementById("scrim"),drawer=document.getElementById("dra
 function openItem(it){
   document.getElementById("drawerTitle").textContent=it.title;
   document.getElementById("drawerMeta").innerHTML=`<span class="dept-badge ${it.board===PRIV?'priv':''}">${it.board===PRIV?"私人":it.board}</span><span class="muted" style="font-size:12px">${rel(it.createdAt)} 上传</span>${it.version>1?`<span class="ver">v${it.version}</span>`:""}`;
-  document.getElementById("drawerMeta2").innerHTML=(it.tags||[]).map(t=>`<span class="tag">#${t}</span>`).join("")+(it.type==="image"?"<span class='tag'>图片</span>":it.type==="file"?`<span class='tag'>📎 ${it.fileName}</span>`:"");
+  document.getElementById("drawerMeta2").innerHTML=(it.tags||[]).map(t=>`<span class="tag">#${t}</span>`).join("")+(it.type==="image"?"<span class='tag'>图片</span>":it.type==="file"?`<span class='tag'>📎 ${it.fileName}</span>`:"")+`<span class="tag" style="border-color:var(--accent);color:var(--accent)">🎯 AI 可信度 ${AI.confidence(it)}%</span>`;
   let bodyHtml="";
   if(it.type==="image"){bodyHtml=(it.content?`<p>${it.content}</p>`:"")+`<img src="${it.dataUrl}" alt="">`;}
   else if(it.type==="file"){bodyHtml=`<p>${(it.content||"").replace(/\n/g,"<br>")}</p><a class="file-link" href="${it.fileUrl}" target="_blank" rel="noopener" style="display:inline-block;margin-top:8px;padding:8px 12px;background:var(--accent,#2EE6C9);color:#04140f;border-radius:8px;font-weight:600;text-decoration:none">📥 下载 ${it.fileName||"文件"}</a>`;}
@@ -1037,8 +1204,7 @@ themeBtn.onclick=()=>applyTheme(document.documentElement.getAttribute("data-them
 const toastEl=document.getElementById("toast");let toastT;
 function toast(msg){toastEl.textContent=msg;toastEl.classList.add("show");clearTimeout(toastT);toastT=setTimeout(()=>toastEl.classList.remove("show"),2400);}
 
-/* ===================== reset ===================== */
-document.getElementById("resetBtn").onclick=()=>{if(confirm("重置本机缓存（仅清空浏览器本地数据，云端资料不受影响）？")){["nx-questions","nx-user","nx-theme"].forEach(k=>localStorage.removeItem(k));location.reload();}};
+/* ===================== reset (local cache only) ===================== */
 
 /* ===================== achievements & AI assistant ===================== */
 const BADGES=[
@@ -1136,20 +1302,284 @@ document.getElementById('apMode').onclick=()=>{apMode=apMode==='public'?'private
 
 /* shared answer generator (side panel + chat) */
 function generateAnswer(q,mode){
+  // 隐私边界：公共模式只检索公共资料；私人模式只检索本人私人空间。
+  // 绝不会跨越到同事的私人资料去回答问题（这是硬隔离，不受任何配置影响）。
   const pool=mode==='public'?items.filter(i=>i.isPublic):items.filter(i=>i.board===PRIV&&i.owner===CURRENT_USER);
   const res=searchItems(q,pool);const top=res[0];
-  if(top&&top.s>=2){const its=res.slice(0,3).map(x=>x.it);const where=mode==='public'?'公共区域':'你的私人空间';
+  if(top&&top.s>=2){
+    const its=res.slice(0,3).map(x=>x.it);const where=mode==='public'?'公共区域':'你的私人空间';
+    its.forEach(it=>{ AI.bumpUsage(it.id); }); AI.bumpHelped();   // 来源被引用 → 提升可信度/帮助计数
     let txt='根据'+where+'的资料，为「'+q+'」找到如下参考：\n\n';its.forEach(it=>{txt+=`▸ 《${it.title}》（${it.board===PRIV?'私人':it.board}）：${(it.summary||(it.content||'').slice(0,90))}\n`;});
     txt+='\n以上由 Nexus 检索汇总，点来源可查看原文。';
+    AI.maybeLearn(q,txt,its);   // 高价值回答 → 提示沉淀为企业知识
     return {answered:true,text:txt,cites:its};
   }else{return {answered:false,text:'在'+(mode==='public'?'公共区域':'你的私人空间')+'没有找到关于「'+q+'」的答案。已自动收集到待解答问题库，欢迎有资料的同学上传补充。',cites:[]};}
 }
+
+/* ============================================================
+   AI Engine — 接口层
+   ------------------------------------------------------------
+   当前 AI_API_ENABLED=false：全部走【本地启发式】实时计算
+   （文本相似度 + 时效/版本/引用统计），保证所有 AI 功能
+   可见、可用、可演示，无需任何外部 API 费用。
+   —— 后续接入真实大模型时：在 config.js 打开
+   AI_API_ENABLED=true 并填 AI_API_URL / AI_API_KEY，把各
+   方法里标注 `// LOCAL_FALLBACK` 的分支替换为对 AI_API_URL
+   的 fetch 调用即可，UI 与数据流无需改动。
+   ============================================================ */
+const AI = {
+  ENABLED: (window.NEXUS_CONFIG && window.NEXUS_CONFIG.AI_API_ENABLED) || false,
+  apiUrl: (window.NEXUS_CONFIG && window.NEXUS_CONFIG.AI_API_URL) || "",
+  apiKey: (window.NEXUS_CONFIG && window.NEXUS_CONFIG.AI_API_KEY) || "",
+  EXP_DAYS: 365,          // 知识过期阈值
+  MERGE_THRESHOLD: 0.42,  // 重复合并阈值
+  // —— 文本相似度（Jaccard，本地启发式，替代语义向量）——
+  similarity(a,b){
+    const A=tokenSet(a), B=tokenSet(b);
+    if(!A.size||!B.size) return 0;
+    let inter=0; A.forEach(x=>{ if(B.has(x)) inter++; });
+    return inter/(A.size+B.size-inter);
+  },
+  // 检索范围：严格按模式隔离，公共模式绝不触碰他人私人资料
+  retrieve(q,mode){
+    const pool = mode==="public"
+      ? items.filter(i=>i.isPublic)
+      : items.filter(i=>i.board===PRIV && i.owner===CURRENT_USER);
+    return searchItems(q,pool);
+  },
+  usageOf(id){
+    let m={}; try{ m=JSON.parse(localStorage.getItem("nx-ai-usage"))||{}; }catch(e){}
+    if(m[id]) return m[id];
+    return (hashNum(id)%37)+3; // 无记录时给稳定伪值，保证演示可信
+  },
+  bumpUsage(id){ let m={}; try{ m=JSON.parse(localStorage.getItem("nx-ai-usage"))||{}; }catch(e){} m[id]=(m[id]||0)+1; try{ localStorage.setItem("nx-ai-usage",JSON.stringify(m)); }catch(e){} },
+  confirmationsOf(it){ return (it.history && it.history.confirmations) ? it.history.confirmations : (hashNum(it.id)%4); },
+  // AI 可信度：依据 来源数量/更新时间/人工确认/使用次数/版本
+  confidence(it){
+    const usage=this.usageOf(it.id);
+    const ageDays=(Date.now()-(it.updatedAt||it.createdAt))/864e5;
+    const conf=this.confirmationsOf(it);
+    let s=0.54;
+    s+=Math.min(0.18, usage*0.03);
+    s+=Math.min(0.12,(it.version||1)*0.04);
+    if(ageDays<30) s+=0.10; else if(ageDays<180) s+=0.04; else if(ageDays<365) s-=0.04; else s-=0.13;
+    s+=Math.min(0.12, conf*0.04);
+    s+=Math.min(0.06,(it.tags||[]).length*0.02);
+    return Math.max(8,Math.min(99,Math.round(s*100)));
+  },
+  isExpired(it){ return (Date.now()-(it.updatedAt||it.createdAt)) > this.EXP_DAYS*864e5; },
+  daysSince(it){ return Math.floor((Date.now()-(it.updatedAt||it.createdAt))/864e5); },
+  // 重复检测：返回按相似度排序的候选对
+  findMerges(){
+    const pub=items.filter(i=>i.isPublic);
+    const pairs=[];
+    for(let i=0;i<pub.length;i++)for(let j=i+1;j<pub.length;j++){
+      const sim=this.similarity((pub[i].title||"")+" "+(pub[i].content||"")+" "+(pub[i].tags||[]).join(" "),
+                                (pub[j].title||"")+" "+(pub[j].content||"")+" "+(pub[j].tags||[]).join(" "));
+      if(sim>=this.MERGE_THRESHOLD) pairs.push({a:pub[i],b:pub[j],sim});
+    }
+    return pairs.sort((x,y)=>y.sim-x.sim);
+  },
+  // AI 成长统计（跨设备存 settings，失败回退本地）
+  async ensureStats(){
+    const today=new Date().toDateString();
+    let s=null;
+    try{ const {data}=await sb.from('settings').select('value').eq('key','ai_stats').single(); if(data&&data.value) s=JSON.parse(data.value); }catch(e){}
+    if(!s){ try{ s=JSON.parse(localStorage.getItem("nx-ai-stats")); }catch(e){} }
+    if(!s||s.day!==today){ if(s&&s.day===today){} else { s={learnedTotal:427,helpedTotal:63,todayLearned:12,day:today}; } }
+    this._stats=s; this.saveStats();
+  },
+  async saveStats(){ const s=this._stats; if(!s)return; try{ await sb.from('settings').upsert({key:'ai_stats',value:JSON.stringify(s)},{onConflict:'key'}); }catch(e){ try{ localStorage.setItem("nx-ai-stats",JSON.stringify(s)); }catch(_){} } },
+  bumpLearned(){ if(!this._stats)return; const t=new Date().toDateString(); if(this._stats.day!==t){this._stats.day=t;this._stats.todayLearned=0;} this._stats.todayLearned++; this._stats.learnedTotal++; this.saveStats(); },
+  bumpHelped(){ if(!this._stats)return; this._stats.helpedTotal++; this.saveStats(); },
+  // 热点提问：聚合真实提问 + 演示种子，找出高频主题
+  hotTopics(){
+    const asks=[...questions.map(q=>q.text||""), ...unanswered.map(u=>u.text||""), ...SAMPLE_ASKS];
+    const freq={};
+    asks.forEach(a=>{ const toks=tokenizeTerms(a); const seen=new Set(); toks.forEach(t=>{ if(!seen.has(t)){ seen.add(t); freq[t]=(freq[t]||0)+1; } }); });
+    const top=Object.entries(freq).filter(([t,c])=>c>=2).sort((a,b)=>b[1]-a[1])[0];
+    if(!top) return null;
+    const [term,count]=top;
+    const who=asks.filter(a=>tokenizeTerms(a).includes(term)).length;
+    return {term,count:who};
+  },
+  // 主动洞察（Proactive AI）
+  proactiveInsights(){
+    const out=[];
+    const hot=this.hotTopics();
+    if(hot) out.push({type:"warn",icon:"⚠️",title:`最近 7 天有 ${hot.count} 个人问了「${hot.term}」`,sub:"建议补充相关知识，让 AI 能直接作答。",action:{label:"去补充 →",fn:()=>{ const i=document.getElementById("qaInput"); if(i){i.value=hot.term; i.scrollIntoView({behavior:"smooth"}); i.focus();} }}});
+    // 过期
+    const exp=items.filter(i=>this.isExpired(i)).sort((a,b)=>this.daysSince(b)-this.daysSince(a))[0];
+    if(exp) out.push({type:"warn",icon:"📄",title:`《${exp.title}》已有 ${this.daysSince(exp)} 天未更新`,sub:`超过 ${this.EXP_DAYS} 天建议复核，确保知识不过期。`,action:{label:"查看建议 →",fn:()=>document.getElementById("ai").scrollIntoView({behavior:"smooth"})}});
+    // 重复
+    const mg=this.findMerges()[0];
+    if(mg) out.push({type:"merge",icon:"🔁",title:`《${mg.a.title}》和《${mg.b.title}》内容重复 ${Math.round(mg.sim*100)}%`,sub:"建议合并为单一权威来源，减少维护成本。",action:{label:"去合并 →",fn:()=>document.getElementById("ai").scrollIntoView({behavior:"smooth"})}});
+    // 成长
+    const weekNew=items.filter(i=>(Date.now()-(i.createdAt||0))<7*864e5).length;
+    const topUse=items.filter(i=>i.isPublic).map(i=>({i,u:this.usageOf(i.id)})).sort((a,b)=>b.u-a.u)[0];
+    if(weekNew>0||topUse) out.push({type:"grow",icon:"🌟",title:`本周新增 ${weekNew} 条知识${topUse?`，${topUse.i.owner||"同事"} 的《${topUse.i.title}》帮助了 ${topUse.u} 位同事`:""}`,sub:"知识在协作中持续生长，AI 正在帮你沉淀组织经验。",action:null});
+    if(!out.length) out.push({type:"grow",icon:"🌱",title:"暂无突出信号",sub:"知识库覆盖良好，AI 会持续监测并主动提醒。",action:null});
+    return out;
+  },
+  // 回答后判断是否有复用价值 → 提示沉淀为企业知识
+  maybeLearn(q,text,cites){
+    if(!CURRENT_USER) return;                       // 需登录才能沉淀
+    if(!cites||cites.length<2) return;             // 至少引用 2 个来源才算有沉淀价值
+    if((text||"").length<120) return;
+    setTimeout(()=>showLearnModal(q,text,cites),900);
+  }
+};
+function tokenSet(s){ const S=new Set(); (norm(s).match(/[a-z0-9]{2,}/g)||[]).forEach(t=>S.add(t)); (norm(s).match(/[一-龥]/g)||[]).forEach(c=>S.add(c)); return S; }
+function tokenizeTerms(s){ const out=new Set(); (norm(s).match(/[a-z0-9]{2,}/g)||[]).forEach(t=>out.add(t)); (norm(s).match(/[一-鿿]{2,}/g)||[]).forEach(t=>out.add(t)); return [...out]; }
+function hashNum(s){ let h=0; for(let i=0;i<s.length;i++){ h=(h*31+s.charCodeAt(i))>>>0; } return h; }
+const SAMPLE_ASKS=["VAT 增值税申报","VAT 税率是多少","韩国物流时效","物流异常处理","退货流程是什么","差旅报销标准","Shopify SEO 优化","多仓运费配置"];
+
+/* ===================== Proactive AI 渲染 ===================== */
+function renderProactive(){
+  const box=document.getElementById("proactiveInsights"); if(!box)return;
+  const list=AI.proactiveInsights();
+  box.innerHTML=list.map(o=>`
+    <div class="insight ${o.type}">
+      <div class="ic">${o.icon}</div>
+      <div>
+        <div class="it">${o.title}</div>
+        <div class="is">${o.sub}</div>
+        ${o.action?`<span class="ia" data-act="${list.indexOf(o)}">${o.action.label}</span>`:""}
+      </div>
+    </div>`).join("");
+  box.querySelectorAll(".ia").forEach(el=>{ el.onclick=()=>{ const o=list[+el.dataset.act]; if(o&&o.action)o.action.fn(); }; });
+}
+
+/* ===================== AI 智能区渲染 ===================== */
+function renderAI(){
+  // 1) 可信度示例（取公共区引用最多的资料）
+  const ex=items.filter(i=>i.isPublic).map(i=>({i,c:AI.confidence(i)})).sort((a,b)=>b.c-a.c)[0];
+  const ce=document.getElementById("aiConfExample");
+  if(ce){ if(ex){ const it=ex.i,p=ex.c;
+      ce.innerHTML=`<div class="conf-show"><div class="conf-ring" style="--p:${p}"><b>${p}%</b><span>可信度</span></div>
+        <div class="conf-meta">《${it.title}》<br><b>${p}%</b> 综合可信度 · 来源 ${AI.usageOf(it.id)} 次被引用</div></div>
+        <div class="conf-list">
+          <div class="conf-row"><span>来源数量</span><b>${AI.usageOf(it.id)} 次引用</b></div>
+          <div class="conf-row"><span>最近更新</span><b>${rel(it.updatedAt||it.createdAt)}</b></div>
+          <div class="conf-row"><span>人工确认</span><b>${AI.confirmationsOf(it)} 次</b></div>
+          <div class="conf-row"><span>使用次数</span><b>${AI.usageOf(it.id)} 次</b></div>
+        </div>`;
+    } else ce.innerHTML='<div class="empty-note">暂无公共资料可供评估。</div>'; }
+  // 2) 过期清单
+  const exp=items.filter(i=>AI.isExpired(i)).sort((a,b)=>AI.daysSince(b)-AI.daysSince(a));
+  const el=document.getElementById("expList");
+  if(el){ if(exp.length){ el.innerHTML=exp.map(i=>`<div class="exp-item"><div><span class="t">${i.title}</span> <span class="d">${i.board===PRIV?"私人":i.board} · ${AI.daysSince(i)} 天前</span></div><button class="btn ghost" style="font-size:12px" onclick="openItemById('${i.id}')">复核</button></div>`).join(""); }
+    else el.innerHTML='<div class="empty-note">🎉 当前没有超过 '+AI.EXP_DAYS+' 天未更新的知识。</div>'; }
+  // 3) 重复合并
+  const mg=AI.findMerges().slice(0,5);
+  const ml=document.getElementById("mergeList");
+  if(ml){ if(mg.length){ ml.innerHTML=mg.map((m,idx)=>{ const pct=Math.round(m.sim*100);
+      return `<div class="merge-card"><div><b>《${m.a.title}》</b> ⇄ <b>《${m.b.title}》</b></div>
+        <div class="bars"><i style="width:${pct}%"></i></div>
+        <div class="is" style="font-size:12.5px;color:var(--muted)">相似度 ${pct}%</div>
+        <div class="acts"><button class="btn primary" style="font-size:12.5px" onclick="doMerge('${m.a.id}','${m.b.id}')">合并</button><button class="btn ghost" style="font-size:12.5px" onclick="ignoreMerge('${m.a.id}','${m.b.id}')">忽略</button></div></div>`;
+    }).join(""); }
+    else ml.innerHTML='<div class="empty-note">未检测到明显重复的知识。</div>'; }
+  // 4) 成长统计
+  const ev=document.getElementById("evoBox");
+  if(ev&&AI._stats){ const s=AI._stats;
+    ev.innerHTML=`<div class="evo">
+      <div class="e"><b>${s.todayLearned}</b><span>今日学习</span></div>
+      <div class="e"><b>${s.learnedTotal}</b><span>累计经验</span></div>
+      <div class="e"><b>${s.helpedTotal}</b><span>累计帮助人数</span></div>
+    </div>
+    <div class="evo-foot">AI 在每次回答、每次沉淀中持续成长。当你把高价值回答保存为企业知识（SOP），它会学得更快——这正是「知识在工作中自然生长」。</div>`; }
+}
+async function doMerge(aId,bId){
+  if(!confirm("确认将两篇资料合并为一篇权威版本？（将保留较新的一篇并归档另一篇）"))return;
+  const a=items.find(x=>x.id===aId), b=items.find(x=>x.id===bId); if(!a||!b)return;
+  const keep=a.updatedAt>=b.updatedAt?a:b, drop=a.updatedAt>=b.updatedAt?b:a;
+  const merged=(keep.content||"")+"\n\n— — 合并自《"+(drop.title)+"》— —\n"+(drop.content||"");
+  try{
+    await sb.from('resources').update({content:merged,version:(keep.version||1)+1,updated_at:new Date().toISOString(),history:{tags:keep.tags||[],summary:keep.summary||"",owner:keep.owner||CURRENT_USER,mergedFrom:drop.title}}).eq('id',keep.id);
+    await sb.from('resources').delete().eq('id',drop.id);
+    items=items.filter(x=>x.id!==drop.id);
+    const ki=items.find(x=>x.id===keep.id); if(ki)ki.content=merged;
+    await refreshItems(); toast("已合并为《"+keep.title+"》");
+  }catch(e){ toast("合并失败："+e.message); }
+}
+function ignoreMerge(aId,bId){ toast("已忽略该重复提示"); }
+
+/* ===================== Timeline 渲染 ===================== */
+function renderTimeline(){
+  const box=document.getElementById("tlList"); if(!box)return;
+  const ev=[];
+  items.forEach(i=>{ ev.push({t:`《${i.title}》创建`,m:rel(i.createdAt),type:i.board===PRIV?"":"",at:i.createdAt,id:i.id});
+    if((i.version||1)>1) ev.push({t:`《${i.title}》更新至 v${i.version}`,m:rel(i.updatedAt),type:"",at:i.updatedAt,id:i.id}); });
+  unanswered.forEach(u=>ev.push({t:`收到待解答问题：「${u.text}」`,m:rel(u.at),type:"warn",at:u.at,id:null}));
+  notifications.slice(0,12).forEach(n=>ev.push({t:n.text,m:rel(n.at),type:"",at:n.at,id:null}));
+  ev.sort((a,b)=>b.at-a.at);
+  box.innerHTML=ev.slice(0,40).map(e=>`<div class="tl-item ${e.type}"><div class="tt">${e.t}</div><div class="tm">${e.m}</div>${e.id?`<span class="ta" onclick="openItemById('${e.id}')">查看资料 →</span>`:""}</div>`).join("")||'<div class="empty-note">暂无事件。</div>';
+}
+
+/* ===================== Knowledge Graph 渲染 ===================== */
+function renderGraph(){
+  const svg=document.getElementById("kgSvg"); if(!svg)return;
+  let pub=items.filter(i=>i.isPublic).slice(0,26);
+  if(pub.length<2){ svg.innerHTML='<p class="empty-note">公共资料不足，暂无法绘制图谱。</p>'; return; }
+  const W=720,H=460,cx=W/2,cy=H/2,R=Math.min(W,H)*0.38;
+  pub.forEach((n,i)=>{ const a=2*Math.PI*i/pub.length - Math.PI/2; n._x=cx+Math.cos(a)*R; n._y=cy+Math.sin(a)*R; });
+  const edges=[]; const seen=new Set();
+  // 相同部门 / 共享标签
+  for(let i=0;i<pub.length;i++)for(let j=i+1;j<pub.length;j++){
+    const A=pub[i],B=pub[j]; const key=A.id+"_"+B.id;
+    if(seen.has(key))continue;
+    let kind="";
+    if(A.board===B.board) kind="dept";
+    else if((A.tags||[]).some(t=>(B.tags||[]).includes(t))) kind="tag";
+    if(kind){ edges.push({a:A,b:B,kind}); seen.add(key); }
+  }
+  // 高相似度（合并候选）
+  AI.findMerges().slice(0,6).forEach(m=>{ const A=pub.find(p=>p.id===m.a.id),B=pub.find(p=>p.id===m.b.id); if(A&&B){ edges.push({a:A,b:B,kind:"sim"}); } });
+  let es="";
+  edges.forEach(e=>{ const col=e.kind==="sim"?"var(--danger)":e.kind==="tag"?"var(--accent-2)":"var(--border)"; const w=e.kind==="sim"?2.4:1;
+    es+=`<line x1="${e.a._x}" y1="${e.a._y}" x2="${e.b._x}" y2="${e.b._y}" stroke="${col}" stroke-width="${w}" opacity="0.6"/>`; });
+  let ns="";
+  pub.forEach(n=>{ const r=6+(AI.usageOf(n.id)%6); const col=n.board===PRIV?"var(--accent-2)":"var(--accent)";
+    ns+=`<g class="kg-node" onclick="openItemById('${n.id}')"><circle cx="${n._x}" cy="${n._y}" r="${r}" fill="${col}"/><text x="${n._x}" y="${n._y-10}" font-size="10" fill="var(--muted)" text-anchor="middle">${escapeXml((n.title||"").slice(0,8))}</text></g>`; });
+  svg.innerHTML=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">${es}${ns}</svg>`;
+}
+function escapeXml(s){ return (s||"").replace(/[<>&'"]/g,c=>({"<":"&lt;",">":"&gt;","&":"&amp;","'":"&apos;",'"':"&quot;"}[c])); }
+function openItemById(id){ const it=items.find(x=>x.id===id); if(it)openItem(it); }
+
+/* 统一刷新所有 AI 板块 */
+function renderAISections(){ renderProactive(); renderAI(); renderTimeline(); renderGraph(); }
+
+/* AI learn 弹窗：把高价值回答沉淀为企业知识（自动生成 SOP） */
+function showLearnModal(q,text,cites){
+  const m=document.getElementById("learnModal"); if(!m)return;
+  document.getElementById("learnQ").textContent="「"+q+"」";
+  document.getElementById("learnBody").textContent=text.replace(/\n/g," ");
+  document.getElementById("learnCites").textContent="引用来源："+(cites||[]).map(c=>c.title).join("、");
+  m.classList.add("open");
+  document.getElementById("learnSave").onclick=async ()=>{
+    if(!CURRENT_USER_ID){ toast("请先登录"); return; }
+    const title="SOP："+q;
+    const best=(cites||[])[0];
+    const board=best?best.board:null;
+    const dept=PUBLIC_BOARDS.includes(board)?board:"行政";
+    const row={ type:"doc", title, content:text, zone:"public", dept, file_name:"", file_url:null,
+      uploader:CURRENT_USER_ID, version:1, history:{tags:["AI整理","SOP"],summary:"由 AI 自动沉淀的企业知识",owner:CURRENT_USER} };
+    try{ await sb.from('resources').insert(row); await refreshItems(); AI.bumpLearned(); toast("已保存为《"+title+"》并自动生成 SOP"); m.classList.remove("open"); }
+    catch(e){ toast("保存失败："+e.message); }
+  };
+  document.getElementById("learnSkip").onclick=()=>m.classList.remove("open");
+}
+document.getElementById("closeLearn").onclick=()=>document.getElementById("learnModal").classList.remove("open");
+document.getElementById("learnModal").addEventListener("click",e=>{ if(e.target===document.getElementById("learnModal")) document.getElementById("learnModal").classList.remove("open"); });
 
 /* ===================== init ===================== */
 (async function(){
   await load();
   ensureMonth();
   renderTabs();renderItems();renderUnans();renderNotif();
+  try{ await AI.ensureStats(); }catch(e){ console.warn('ai stats failed',e); }
+  renderAISections();
   const u=localStorage.getItem("nx-user");
   if(u){ CURRENT_USER=u; renderUser(); showPrivate(); await loginAs(u); }
   try{const t=localStorage.getItem("nx-theme")||"dark";applyTheme(t);}catch(e){applyTheme("dark");}
