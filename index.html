@@ -68,10 +68,7 @@
   .pill .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent)}
   h1.hero-title{font-size:clamp(34px,5.4vw,60px);line-height:1.06;font-weight:700;letter-spacing:-1px;max-width:18ch}
   .hero-sub{margin:22px 0 0;font-size:18px;color:var(--muted);max-width:60ch;line-height:1.7}
-  .hero-search{display:flex;gap:10px;margin-top:30px;max-width:640px;background:var(--panel);border:1px solid var(--border-strong);border-radius:16px;padding:8px;backdrop-filter:blur(10px);box-shadow:var(--shadow-sm)}
-  .hero-search input{flex:1;background:transparent;border:none;outline:none;color:var(--text);font-size:16px;font-family:inherit;padding:0 14px}
-  .hero-search input::placeholder{color:var(--muted)}
-  .hero-search .btn{white-space:nowrap}
+
   .hero-cta{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
   .hero-tag{margin-top:28px;font-family:"Space Grotesk","PingFang SC",sans-serif;font-size:16px;letter-spacing:.4px;color:var(--accent-2);opacity:.95}
 
@@ -357,7 +354,6 @@
     .hero{padding:40px 0 22px}
     h1.hero-title{font-size:clamp(28px,8.5vw,36px)}
     .hero-sub{font-size:15.5px;margin-top:16px}
-    .hero-search{margin-top:22px}
     .pill{font-size:11px;padding:6px 13px;margin-bottom:16px}
     section.block{padding:48px 0}
     .app-head{margin-bottom:20px}
@@ -368,7 +364,7 @@
     .items{grid-template-columns:1fr;gap:12px}
     .card{padding:15px 16px}
     .panel{padding:18px;border-radius:16px}
-    .qa-input,.field input,.field textarea,.field select,.ap-input input,.hero-search input{font-size:16px}
+    .qa-input,.field input,.field textarea,.field select,.ap-input input{font-size:16px}
     .unans-list{max-height:260px}
     .modal{padding:0;place-items:end center}
     .card-modal{width:100%;max-width:100%;border-radius:20px 20px 0 0;padding:24px 20px calc(20px + env(safe-area-inset-bottom));max-height:92dvh}
@@ -475,12 +471,9 @@
     <span class="pill"><span class="dot"></span>组织资源共享平台</span>
     <h1 class="hero-title">让每一次上传，<br>都成为团队的<span class="accent">资产</span>。</h1>
     <p class="hero-sub">上传资料到公共部门版块或你的私人空间；问 AI，它会检索已有资料作答、回忆你的备忘录、收集无解的问题。先登录，再上传和提问。</p>
-    <div class="hero-search">
-      <input id="heroSearch" placeholder="想问什么？例如：差旅报销的标准是多少" autocomplete="off" />
-      <button class="btn primary" id="heroAskBtn">问 AI</button>
-    </div>
     <div class="hero-cta">
-      <a class="btn primary" href="#app">进入知识库 →</a>
+      <button class="btn primary" id="heroAskBtn">问 AI →</button>
+      <a class="btn ghost" href="#app">浏览知识库</a>
     </div>
     <p class="hero-tag">知识不是整理出来的，而是在工作中自然生长。</p>
     <div class="user-banner" id="userBanner"></div>
@@ -1642,15 +1635,13 @@ document.getElementById("learnModal").addEventListener("click",e=>{ if(e.target=
 
 /* ===================== hero search delegation + scroll reveal ===================== */
 (function(){
-  var hs=document.getElementById('heroSearch'), hb=document.getElementById('heroAskBtn');
+  var hb=document.getElementById('heroAskBtn');
   function go(){
-    var v=(hs&&hs.value||'').trim();
     var qa=document.getElementById('qaInput');
-    if(qa){ if(v){qa.value=v;} qa.scrollIntoView({behavior:'smooth',block:'center'}); setTimeout(function(){qa.focus(); if(v){ try{askAI();}catch(e){} } },400); }
+    if(qa){ qa.scrollIntoView({behavior:'smooth',block:'center'}); setTimeout(function(){ try{qa.focus();}catch(e){} },400); }
     else { var a=document.getElementById('ask'); if(a)a.scrollIntoView({behavior:'smooth'}); }
   }
   if(hb) hb.addEventListener('click',go);
-  if(hs) hs.addEventListener('keydown',function(e){ if(e.key==='Enter') go(); });
   var els=document.querySelectorAll('.reveal');
   if('IntersectionObserver' in window){
     var io=new IntersectionObserver(function(entries){entries.forEach(function(en){ if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);} });},{threshold:0.08});
@@ -1700,7 +1691,7 @@ document.getElementById("learnModal").addEventListener("click",e=>{ if(e.target=
   document.body.insertAdjacentHTML("beforeend", html);
 
   var steps=[
-    {sel:"#heroSearch",title:"问 AI 任何问题",body:"在搜索框输入问题，回车或点「问 AI」即可跨版块检索资料，并给出带来源的答案。",pos:"bottom",block:"center",pad:12},
+    {sel:"#qaInput",title:"问 AI 任何问题",body:"在提问框输入问题，回车或点「提问」即可跨版块检索资料，并给出带来源的答案。",pos:"bottom",block:"center",pad:12},
     {sel:"#app",title:"资源库",body:"13 个公共部门版块 + 你的私人空间都在这里。用版块标签切换，点「＋ 上传」沉淀资料。",pos:"top",block:"start",pad:14},
     {sel:"#uploadBtn",title:"上传即沉淀",body:"文字、文件、图片都能贡献。上传到公共版块共享给团队，或存进私人空间。",pos:"bottom",block:"center",pad:12},
     {sel:"#proactiveInsights",title:"AI 主动洞察",body:"AI 主动监测知识库，提醒你过期、重复、热点——它不只是回答问题，更帮公司让知识保值增值。",pos:"top",block:"center",pad:14},
