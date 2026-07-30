@@ -320,15 +320,6 @@
   .ai-note{display:flex;align-items:center;gap:9px;font-size:12.5px;color:var(--muted);background:var(--panel-2);border:1px solid var(--border);border-radius:11px;padding:11px 14px;margin-top:14px}
   .ai-note b{color:var(--text)}
 
-  /* feature grid (#feat) */
-  .feat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:8px}
-  @media(max-width:1000px){.feat-grid{grid-template-columns:repeat(2,1fr)}}
-  @media(max-width:560px){.feat-grid{grid-template-columns:1fr}}
-  .feat-card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius-sm);padding:22px;transition:.24s;position:relative;overflow:hidden;backdrop-filter:blur(8px)}
-  .feat-card:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:var(--shadow-sm)}
-  .feat-ic{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;font-size:23px;background:var(--accent-soft);border:1px solid var(--border-strong);margin-bottom:14px}
-  .feat-card h3{font-size:16px;font-weight:600;margin-bottom:6px}
-  .feat-card p{font-size:13px;color:var(--muted);line-height:1.6}
 
   /* scroll reveal */
   .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
@@ -398,7 +389,7 @@
     .foot-in{flex-direction:column;align-items:flex-start}
     .toast{bottom:calc(90px + env(safe-area-inset-bottom));width:calc(100vw - 32px);text-align:center}
     footer{padding-bottom:calc(40px + env(safe-area-inset-bottom))}
-    .feat-grid{grid-template-columns:1fr}
+
   }
   @media(max-width:380px){
     .brand div{font-size:13px}
@@ -456,7 +447,7 @@
       <svg class="reticle" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="17" stroke="var(--accent)" stroke-width="1.6"/><circle cx="20" cy="20" r="3" fill="var(--accent)"/><path d="M20 3v9M20 28v9M3 20h9M28 20h9" stroke="var(--accent)" stroke-width="1.6"/></svg>
       <div>NEXUS BRAIN<small>VECTOROPTICS · 资源共享</small></div>
     </a>
-    <nav class="nav-links"><a href="#ask">问 AI</a><a href="#app">资源库</a><a href="#feat">能力</a><a href="#ai">AI 智能</a><a href="#timeline">时间线</a><a href="#graph">图谱</a><a href="#game">积分</a></nav>
+    <nav class="nav-links"><a href="#ask">问 AI</a><a href="#app">资源库</a><a href="#ai">AI 智能</a><a href="#timeline">时间线</a><a href="#graph">图谱</a><a href="#game">积分</a></nav>
     <div class="nav-actions">
       <button class="btn" id="loginBtn">登录</button>
       <button class="btn" id="gameBtn">🏅 成就</button>
@@ -490,7 +481,6 @@
     </div>
     <div class="hero-cta">
       <a class="btn primary" href="#app">进入知识库 →</a>
-      <a class="btn ghost" href="#feat">了解平台能力</a>
     </div>
     <p class="hero-tag">知识不是整理出来的，而是在工作中自然生长。</p>
     <div class="user-banner" id="userBanner"></div>
@@ -508,24 +498,6 @@
   </div>
 </section>
 
-<section class="block feat reveal" id="feat">
-  <div class="wrap">
-    <div class="sec-title-row center">
-      <div><div class="kicker">平台能力</div><h2>从上传到沉淀，全链路可用</h2></div>
-      <p class="muted" style="max-width:620px;margin-top:8px">一个为组织知识而生的协作中枢：自由贡献、智能检索、主动沉淀，让团队经验持续保值增值。</p>
-    </div>
-    <div class="feat-grid">
-      <div class="feat-card"><div class="feat-ic">📝</div><h3>自由上传</h3><p>文字 / 文件 / 图片，随时沉淀你的资料。</p></div>
-      <div class="feat-card"><div class="feat-ic">🗂️</div><h3>版块 + 私人空间</h3><p>13 个公共部门版块，加一个只属于你的私人空间。</p></div>
-      <div class="feat-card"><div class="feat-ic">🔎</div><h3>公共检索问答</h3><p>问 AI，它跨版块检索并标注来源作答。</p></div>
-      <div class="feat-card"><div class="feat-ic">🧠</div><h3>私人回忆</h3><p>切换到私人模式，AI 只回忆你的备忘录。</p></div>
-      <div class="feat-card"><div class="feat-ic">🔁</div><h3>重复检测并更新</h3><p>相似资料自动提示，一键更新或合并。</p></div>
-      <div class="feat-card"><div class="feat-ic">⬆️</div><h3>高价值提升公共</h3><p>私人好内容，AI 建议提升到公共区共享。</p></div>
-      <div class="feat-card"><div class="feat-ic">❓</div><h3>未答问题收集</h3><p>答不出的问题被收集，等资料补充。</p></div>
-      <div class="feat-card"><div class="feat-ic">💡</div><h3>AI 主动洞察</h3><p>过期、重复、热点——主动提醒你优化。</p></div>
-    </div>
-  </div>
-</section>
 
 <section class="block reveal" id="ask">
   <div class="wrap">
