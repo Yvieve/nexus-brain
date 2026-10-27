@@ -2,6 +2,7 @@
 <html lang="zh-CN" data-theme="dark">
 <head>
 <meta charset="UTF-8" />
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <meta name="theme-color" content="#070b14" />
 <title>Nexus Brain · VectorOptics 资源共享平台</title>
@@ -432,6 +433,8 @@
   .ob-welcome .modal-foot .btn{flex:1;justify-content:center;padding:12px}
   @media(max-width:640px){.ob-tip{left:50%!important;right:auto!important;transform:translateX(-50%);bottom:18px!important;top:auto!important;width:92vw}.ob-spot{transition:none}}
   @media(prefers-reduced-motion:reduce){.ob-spot,.ob-tip{transition:none}}
+  /* 引导滚动时让板块避开 sticky header，避免高亮框被压到 header 下方 */
+  .block,.proactive{scroll-margin-top:86px}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -641,12 +644,13 @@
 <div class="modal" id="loginModal"><div class="card-modal">
   <button class="icon-btn x2" id="closeLogin" aria-label="关闭">✕</button>
   <h2>进入 Nexus Brain</h2>
-  <div class="sub">输入姓名与邀请码，加入资源共享平台。</div>
-  <div class="field"><label>你的名字</label><input id="loginName" placeholder="例如：林薇" autocomplete="off" /></div>
-  <div class="field"><label>邀请码</label><input id="loginCode" placeholder="例如：VECTOR-2026" autocomplete="off" /></div>
+  <div class="sub">用邮箱与密码登录；首次使用会以此邮箱创建账号，姓名仅作展示（可与其他人相同）。</div>
+  <div class="field"><label>邮箱（登录账号，唯一）</label><input id="loginEmail" type="email" placeholder="例如：linwei@company.com" autocomplete="off" /></div>
+  <div class="field"><label>你的名字（展示用，可重复）</label><input id="loginName" placeholder="例如：林薇" autocomplete="off" /></div>
+  <div class="field"><label>密码</label><input id="loginCode" type="password" placeholder="至少 6 位" autocomplete="off" /></div>
   <div class="login-err" id="loginErr"></div>
   <div class="modal-foot"><button class="btn primary" id="loginSubmit">进入 →</button></div>
-  <div class="hint-codes">可用邀请码（demo）：<br><code>VECTOR-2026</code><code>NEXUS-OPTICS</code><code>DEMO-1234</code></div>
+  <div class="hint-codes">首次使用即自动创建账号（邮箱 + 密码）。<br>姓名只是展示，可以和其他人相同；私人资料仅你本人可见，积分云端实时累计、按人隔离。</div>
 </div></div>
 
 <!-- UPLOAD MODAL -->
@@ -683,14 +687,14 @@
 <!-- AI LEARN MODAL -->
 <div class="modal" id="learnModal"><div class="card-modal learn-card">
   <button class="icon-btn x2" id="closeLearn" aria-label="关闭">✕</button>
-  <h3 style="font-size:18px">✦ 检测到该回答具有复用价值</h3>
+  <h3 style="font-size:18px">✦ 这篇 AI 汇总回答值得沉淀为可检索的 SOP</h3>
   <p class="muted" style="font-size:13.5px;margin:6px 0 4px">问题：<b id="learnQ" style="color:var(--text)"></b></p>
   <div class="lq" id="learnBody"></div>
   <div class="lrow" id="learnCites" style="color:var(--accent)"></div>
-  <div class="lrow"><span>保存后将自动生成 <b>SOP</b> 并沉淀为企业知识，供全员检索复用。</span></div>
+  <div class="lrow"><span>保存后，会把<b>这次 AI 基于上方来源整理出的回答</b>作为一条公开 SOP 存入公共资料库（与现有资料同一处），全员以后可直接检索复用，无需再问一遍 AI。它不会改动你已检索到的原始资料。</span></div>
   <div class="learn-actions">
     <button class="btn ghost" id="learnSkip">暂不</button>
-    <button class="btn primary" id="learnSave">保存为企业知识</button>
+    <button class="btn primary" id="learnSave">保存为公开 SOP</button>
   </div>
 </div></div>
 
@@ -762,6 +766,25 @@ try {
     auth: new Proxy({}, { get: function(){ return function(){ return Promise.resolve({ data: null, error: null }); }; } }),
     storage: { from: function(){ return _sb_chain; } }
   };
+}
+
+/* ===================== 真实身份认证 (Supabase Auth) ===================== */
+async function applyAuth(session){
+  if(session && session.user){
+    const u=session.user;
+    CURRENT_USER=(u.user_metadata&&u.user_metadata.name)||(u.email?u.email.split('@')[0]:u.id);
+    CURRENT_USER_ID=u.id;
+    try{ await sb.from('profiles').upsert({id:CURRENT_USER_ID,nickname:CURRENT_USER,color:'#C8102E'},{onConflict:'id'}); }catch(e){}
+    await loadGame();
+    showPrivate(); renderUser();
+    await refreshNotifications(); renderItems();
+  }else{
+    CURRENT_USER=null; CURRENT_USER_ID=null; hidePrivate(); renderUser(); renderItems();
+  }
+}
+if(sb&&sb.auth){
+  try{ sb.auth.onAuthStateChange((_e,s)=>{ applyAuth(s); }); }catch(e){}
+  try{ sb.auth.getSession().then(({data})=>applyAuth(data?data.session:null)).catch(()=>{}); }catch(e){}
 }
 
 /* ===================== data ===================== */
@@ -965,7 +988,7 @@ function renderItems(){
   itemsEl.innerHTML="";
   let list=items.slice();
   if(activeBoard==="全部") list=list.filter(i=>i.isPublic);
-  else if(activeBoard==="我的私人"){ if(!CURRENT_USER){itemsEl.innerHTML='<div class="card"><div class="dup-note">登录后查看你的私人空间。<button class="btn" style="margin-top:10px" onclick="document.getElementById(\'loginBtn\').click()">去登录</button></div></div>';return;} list=list.filter(i=>i.board===PRIV&&i.owner===CURRENT_USER); }
+  else if(activeBoard==="我的私人"){ if(!CURRENT_USER_ID){itemsEl.innerHTML='<div class="card"><div class="dup-note">登录后查看你的私人空间。<button class="btn" style="margin-top:10px" onclick="document.getElementById(\'loginBtn\').click()">去登录</button></div></div>';return;} list=list.filter(i=>i.board===PRIV&&i.uploader===CURRENT_USER_ID); }
   else list=list.filter(i=>i.board===activeBoard);
   list.sort((a,b)=>b.createdAt-a.createdAt);
   if(!list.length){itemsEl.innerHTML='<div class="card"><div class="dup-note">这个版块还没有资料。<button class="btn primary" style="margin-top:10px" onclick="openUpload()">＋ 上传第一份</button></div></div>';return;}
@@ -1031,13 +1054,16 @@ async function fetchInviteCode(){
   try{ const {data}=await sb.from('settings').select('value').eq('key','invite_code').single(); if(data&&data.value) return data.value.toUpperCase(); }catch(e){}
   return "NEXUS2026";
 }
-async function loadGame(name){
-  try{ const {data}=await sb.from('settings').select('value').eq('key','game:'+name).single();
-    if(data&&data.value){ const g=JSON.parse(data.value); if(g)G=g; } }catch(e){}
+async function loadGame(){
+  try{ const raw=localStorage.getItem('nx-game'); if(raw){ const o=JSON.parse(raw);
+    G.badges=o.badges||[]; G.coins=o.coins||0; G.chars=o.chars||[]; G.loginDays=o.loginDays||[];
+    G.deptSet=o.deptSet||[]; G.monthKey=o.monthKey||''; G.monthBadges=o.monthBadges||[]; G.monthChars=o.monthChars||[]; G.monthClaimed=!!o.monthClaimed;
+  } }catch(e){}
+  if(CURRENT_USER_ID){ try{ const {data}=await sb.from('points').select('points').eq('user_id',CURRENT_USER_ID).maybeSingle(); if(data) G.points=data.points||0; }catch(e){} }
+  updateGameNav();
 }
-async function saveGame(){
-  if(!CURRENT_USER) return;
-  try{ await sb.from('settings').upsert({key:'game:'+CURRENT_USER,value:JSON.stringify(G)},{onConflict:'key'}); }catch(e){}
+function saveGame(){
+  try{ const {points,...rest}=G; localStorage.setItem('nx-game',JSON.stringify(rest)); }catch(e){}
 }
 async function loginAs(name){
   name=(name||"").trim();if(!name)return;
@@ -1053,17 +1079,34 @@ async function loginAs(name){
   renderItems();
   toast("欢迎，"+name+(CURRENT_USER_ID?"":"（数据库不可用，积分仅本机）"));
 }
-function doLogin(){
+async function doLogin(){
+  const email=document.getElementById("loginEmail").value.trim();
   const name=document.getElementById("loginName").value.trim();
-  const code=document.getElementById("loginCode").value.trim().toUpperCase();
+  const pw=document.getElementById("loginCode").value.trim();
   const err=document.getElementById("loginErr");
-  if(!name){err.textContent="请先填写你的名字";return;}
-  fetchInviteCode().then(inv=>{
-    if(!VALID_CODES.includes(code)&&code!==inv){err.textContent="邀请码不正确，请检查下方可用邀请码";return;}
-    err.textContent="";loginAs(name);
-  });
+  if(!email||!pw){err.textContent="请填写邮箱和密码";return;}
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){err.textContent="请输入有效邮箱";return;}
+  if(pw.length<6){err.textContent="密码至少 6 位";return;}
+  err.textContent="";
+  try{
+    let {error}=await sb.auth.signInWithPassword({email,password:pw});
+    if(error){
+      if(/not found|Invalid login|Email not confirmed/i.test(error.message)){
+        const r=await sb.auth.signUp({email,password:pw,options:{data:{name:name||email.split('@')[0]}}});
+        if(r.error){err.textContent=r.error.message;return;}
+        if(r.data&&r.data.session){ applyAuth(r.data.session); closeLogin(); toast("已创建账号并登录"); return; }
+        err.textContent="账号已创建，请用同样的邮箱和密码再次点「进入」";return;
+      }
+      err.textContent=error.message;return;
+    }
+    // 登录成功：同步展示名（姓名可重复，不影响身份）
+    if(name){ try{ await sb.auth.updateUser({data:{name}}); }catch(e){} }
+    const {data}=await sb.auth.getSession().catch(()=>({data:null}));
+    if(data&&data.session) applyAuth(data.session);
+    closeLogin();
+  }catch(e){err.textContent="登录失败："+e.message;return;}
 }
-function logout(){CURRENT_USER=null;CURRENT_USER_ID=null;try{localStorage.removeItem("nx-user");}catch(e){}renderUser();hidePrivate();renderItems();toast("已退出登录");}
+function logout(){ if(sb&&sb.auth){ sb.auth.signOut().then(()=>{}).catch(()=>{}); } CURRENT_USER=null;CURRENT_USER_ID=null;try{localStorage.removeItem("nx-user");}catch(e){}renderUser();hidePrivate();renderItems();toast("已退出登录");}
 loginBtn.onclick=openLogin;
 document.getElementById("closeLogin").onclick=closeLogin;
 loginModal.addEventListener("click",e=>{if(e.target===loginModal)closeLogin();});
@@ -1289,7 +1332,11 @@ function curMonth(){const d=new Date();return d.getFullYear()+'-'+(d.getMonth()+
 function ensureMonth(){const m=curMonth();if(G.monthKey!==m){G.monthKey=m;G.monthBadges=[];G.monthChars=[];G.monthClaimed=false;saveG();}}
 function saveG(){saveGame();}
 function updateGameNav(){const b=document.getElementById('gameBtn');if(b)b.textContent='🏅 '+G.points+' 分';}
-function award(n,reason){G.points+=n;toast('+'+n+' 积分 · '+reason);checkChars();updateGameNav();saveG();renderGameIfOpen();}
+async function award(n,reason){
+  if(CURRENT_USER_ID){ try{ await sb.rpc('award_points',{p_user:CURRENT_USER_ID,p_points:n}); }catch(e){} try{ const {data}=await sb.from('points').select('points').eq('user_id',CURRENT_USER_ID).maybeSingle(); if(data) G.points=data.points||0; }catch(e){} }
+  else { G.points+=n; }
+  toast('+'+n+' 积分 · '+reason); checkChars(); updateGameNav(); renderGameIfOpen();
+}
 function earnBadge(id){if(G.badges.includes(id))return;G.badges.push(id);const b=BADGES.find(x=>x.id===id);toast('🏅 获得徽章：'+b.name);if(G.monthKey===curMonth()&&!G.monthBadges.includes(id))G.monthBadges.push(id);saveG();checkMonthly();renderGameIfOpen();}
 function earnChar(id){if(G.chars.includes(id))return;G.chars.push(id);const c=CHARS.find(x=>x.id===id);toast('🎁 解锁角色：'+c.icon+' '+c.name);if(G.monthKey===curMonth()&&!G.monthChars.includes(id))G.monthChars.push(id);saveG();checkMonthly();renderGameIfOpen();}
 function checkChars(){CHARS.forEach(c=>{if(G.points>=c.need)earnChar(c.id);});}
@@ -1615,7 +1662,7 @@ function showLearnModal(q,text,cites){
   const m=document.getElementById("learnModal"); if(!m)return;
   document.getElementById("learnQ").textContent="「"+q+"」";
   document.getElementById("learnBody").textContent=text.replace(/\n/g," ");
-  document.getElementById("learnCites").textContent="引用来源："+(cites||[]).map(c=>c.title).join("、");
+  const cs=(cites||[]); document.getElementById("learnCites").textContent="引用来源（"+cs.length+" 个）："+cs.map(c=>c.title).join("、");
   m.classList.add("open");
   document.getElementById("learnSave").onclick=async ()=>{
     if(!CURRENT_USER_ID){ toast("请先登录"); return; }
@@ -1699,7 +1746,7 @@ document.getElementById("learnModal").addEventListener("click",e=>{ if(e.target=
     {sel:"#timeline",title:"知识时间线",body:"按时间回看团队知识的沉淀脉络，看清哪块积累厚、哪块还薄弱。",pos:"top",block:"start",pad:14},
     {sel:"#kgSvg",title:"知识图谱",body:"同部门、共享标签、高相似的内容自动连成网络，帮你看清知识结构。",pos:"top",block:"center",pad:14},
     {sel:"#game",title:"积分与成就",body:"贡献、被引用、回答被采纳都会累积积分，解锁徽章，且跨设备同步。",pos:"top",block:"start",pad:14},
-    {sel:"#loginBtn",title:"登录即协作",body:"用昵称 + 邀请码登录后，才能上传、提问，并看到你的私人空间。",pos:"bottom",block:"center",pad:12}
+    {sel:"#loginBtn",title:"登录即协作",body:"用邮箱 + 密码登录后，才能上传、提问，并看到你的私人空间。",pos:"bottom",block:"center",pad:12}
   ];
   var idx=0, active=false;
   var shade=document.getElementById("obShade");
@@ -1764,8 +1811,15 @@ document.getElementById("learnModal").addEventListener("click",e=>{ if(e.target=
     if(!el){ next(); return; }
     try{ el.scrollIntoView({behavior:"smooth",block:st.block||"center"}); }catch(e){}
     positionNow();
-    requestAnimationFrame(function(){ positionNow(); });
-    setTimeout(positionNow, 420);
+    // 跟随平滑滚动，直到滚动真正停止再最终定位，避免高亮框停在滚动中途的位置
+    if(window.__obRaf) cancelAnimationFrame(window.__obRaf);
+    var lastY=window.scrollY, still=0;
+    (function tick(){
+      positionNow();
+      if(window.scrollY===lastY){ still++; } else { still=0; lastY=window.scrollY; }
+      if(still<12){ window.__obRaf=requestAnimationFrame(tick); }
+      else { positionNow(); }
+    })();
   }
   function show(){ active=true; idx=0; if(wel){ wel.classList.remove("open"); wel.style.display="none"; } shade.style.display="block"; spot.style.display="block"; tip.style.display="block"; positionNow(); }
   function start(){ if(wel){ wel.classList.remove("open"); wel.style.display="none"; } if(active) return; show(); place(); }
@@ -1780,7 +1834,7 @@ document.getElementById("learnModal").addEventListener("click",e=>{ if(e.target=
   if(btnDismiss) btnDismiss.onclick=function(){ if(wel) wel.classList.remove("open"); try{localStorage.setItem(KEY,"1");}catch(e){} };
   if(btnHelp) btnHelp.onclick=function(){ if(!active) start(); };
   if(wel) wel.addEventListener("click",function(e){ if(e.target===wel){ try{localStorage.setItem(KEY,"1");}catch(_){} wel.classList.remove("open"); } });
-  window.addEventListener("resize",function(){ if(active) place(); });
+  window.addEventListener("resize",function(){ if(active) positionNow(); });
   window.addEventListener("keydown",function(e){ if(active&&e.key==="Escape") stop(); });
 
   var done=false; try{ done=localStorage.getItem(KEY)==="1"; }catch(e){}
