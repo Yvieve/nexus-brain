@@ -22,3 +22,5 @@ async function request(path,method='GET',body,contentType='application/json'){
  const html=await response.text();if(!response.ok||!html.includes('GitHub 热门')||!html.includes('创建我的 Skill / Agent'))throw Error('Published page did not pass content verification');
  record.status='published';record.url='https://'+TARGET+'.netlify.app/';console.log('Independent competition preview published and verified');
  }catch(error){record.status='failed';record.error=error.message;console.error(error.message);process.exitCode=1;}finally{record.finishedAt=new Date().toISOString();fs.writeFileSync('delivery/deployment-result.json',JSON.stringify(record,null,2));}})();
+
+// Retry after repository credential update: 2026-11-11T11:55:21.693858+00:00
