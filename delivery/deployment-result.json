@@ -1,0 +1,8 @@
+{
+  "target": "brilliant-blini-c611ea",
+  "startedAt": "2026-11-11T11:39:32.026Z",
+  "commit": "2e3a06c6fad5d897e4069c16ea3c833fc74b1b5d",
+  "status": "failed",
+  "error": "Netlify API HTTP 401",
+  "finishedAt": "2026-11-11T11:39:32.349Z"
+}
