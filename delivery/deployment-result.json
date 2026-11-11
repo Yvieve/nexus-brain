@@ -1,8 +1,10 @@
 {
   "target": "brilliant-blini-c611ea",
-  "startedAt": "2026-11-11T11:39:32.026Z",
-  "commit": "2e3a06c6fad5d897e4069c16ea3c833fc74b1b5d",
-  "status": "failed",
-  "error": "Netlify API HTTP 401",
-  "finishedAt": "2026-11-11T11:39:32.349Z"
+  "startedAt": "2026-11-11T11:55:33.248Z",
+  "commit": "b758752dd1c1534e7a98b3c8f90fb0f18fbb078a",
+  "status": "published",
+  "siteId": "712b8c71-56ee-45af-a9ae-a623066f2aed",
+  "deployId": "6af457b6a38f38a3d18824ae",
+  "url": "https://brilliant-blini-c611ea.netlify.app/",
+  "finishedAt": "2026-11-11T11:55:36.960Z"
 }
