@@ -1,0 +1,37 @@
+name: Deploy independent competition preview
+on:
+  push:
+    branches: [delivery/competition-login-20261111]
+    paths:
+      - delivery/nexus-login.zip
+      - delivery/deploy-competition.cjs
+      - .github/workflows/competition-preview.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: nexus-independent-competition-preview
+  cancel-in-progress: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Deploy only the independent competition site
+        run: node delivery/deploy-competition.cjs
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+      - name: Record deployment result on delivery branch only
+        if: always()
+        run: |
+          if [ -f delivery/deployment-result.json ]; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add delivery/deployment-result.json
+            git diff --cached --quiet || git commit -m 'Record independent competition deployment result'
+            git push origin HEAD:delivery/competition-login-20261111
+          fi
