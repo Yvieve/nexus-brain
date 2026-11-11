@@ -1,13 +1,13 @@
 {
   "target": "brilliant-blini-c611ea",
-  "startedAt": "2026-11-11T13:25:48.754Z",
-  "commit": "59a785f3f272cd4be525b6b4ff8d543d08439113",
+  "startedAt": "2026-11-11T13:33:57.325Z",
+  "commit": "bfcbf34c7e5d82ac83984f41346968f2a992a774",
   "status": "published",
   "siteId": "712b8c71-56ee-45af-a9ae-a623066f2aed",
-  "deployId": "6af46cf2f4c64471032c470f",
+  "deployId": "6af46edfe695de08b39998dc",
   "aiStatusMessage": "请先登录",
   "aiConfigurationPresent": true,
   "functionsVerified": true,
   "url": "https://brilliant-blini-c611ea.netlify.app/",
-  "finishedAt": "2026-11-11T13:26:19.828Z"
+  "finishedAt": "2026-11-11T13:34:26.768Z"
 }
