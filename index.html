@@ -544,11 +544,12 @@
 </div></section>
 <section class="block reveal nexus-new-feature" id="personal-studio" style="background:var(--bg-2)"><div class="wrap">
  <div class="app-head"><div><div class="kicker">我的助手</div><h2>创建我的 Skill / Agent</h2><p class="lead">说说你想完成什么工作，聊清楚后保存成自己的助手。</p></div><div class="ns-toolbar"><button class="btn" id="nsReloadRecords">刷新我的记录</button><button class="btn primary" id="nsNew">＋ 新对话</button></div></div>
- <div class="ns-chat-intro"><span id="nsConnection">AI 尚未接入</span><button id="nsTryGuided" class="btn ghost">整理现有流程（问卷）</button></div><p id="nsStatus" class="ns-status" role="status">请使用右上角原有账号登录。</p>
+ <div class="ns-chat-intro"><span id="nsConnection">AI 尚未接入</span><button id="nsTryGuided" class="btn ghost">整理现有流程（问卷）</button></div>
  <div class="ns-studio-grid"><aside class="panel"><h3>我的助手</h3><input id="nsSearch" placeholder="搜索我的 Skill / Agent" aria-label="搜索我的沉淀"><div id="nsList"></div></aside>
  <div class="panel"><details id="nsSettings"><summary>名称与保存设置</summary><div class="ns-toolbar"><label>名称<input id="nsName" maxlength="120" placeholder="对话后可命名"></label><label>保存为<select id="nsKind"><option value="skill">Skill · 工作方法</option><option value="agent">Agent · 个人助手</option></select></label><label>部门<select id="nsDepartment"></select></label><select id="nsEngine" aria-label="对话模式"><option value="ai" selected>AI 对话</option><option value="guided">流程问卷（非 AI）</option></select></div></details><div id="nsMessages" class="ns-messages" role="log" aria-label="个人经验整理对话"></div>
  <form id="nsChatForm"><label for="nsInput">本轮输入</label><textarea id="nsInput" maxlength="6000" placeholder="例如：帮我建立一个每周做投放复盘的助手。" required></textarea><div class="ns-toolbar"><button class="btn primary" id="nsSend">发送</button><button type="button" class="btn" id="nsImageTool">图片压缩</button><button type="button" class="btn" id="nsUndo">撤回上一轮</button></div></form>
  <div class="ns-toolbar"><button class="btn primary" id="nsSummarize">生成并保存我的助手</button></div>
+ <p id="nsStatus" class="ns-status" role="status">请使用右上角原有账号登录。</p>
  <details id="nsSavedResult"><summary>查看保存的指令</summary><p class="hint" id="nsProgress"></p><pre id="nsSummary" class="ns-summary">聊完后，这里会显示整理好的指令。</pre><div class="ns-toolbar"><button class="btn" id="nsCopy">复制指令</button><button class="btn" id="nsUse">试用模板</button><button class="btn" id="nsMarkdown">导出 Markdown</button><button class="btn" id="nsExport">导出 JSON</button></div></details>
  <details id="nsMore"><summary>更多操作</summary><div class="ns-toolbar"><button class="btn" id="nsSave">保存设置</button><button class="btn" id="nsDelete">删除此助手</button></div></details>
  </div></div>
