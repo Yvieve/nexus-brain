@@ -1,6 +1,6 @@
 const fs=require('node:fs'),path=require('node:path');
 const root=path.resolve(__dirname,'..'),out=path.join(root,'dist');fs.rmSync(out,{force:true,recursive:true});fs.mkdirSync(out);
-for(const file of ['index.html','config.js','department-skills.js','department-skills.css','studio-core.js','curated-skills.js','github-rules.js','account-recovery.js','image-tool.js','trending-snapshot.json','hero.jpg','logo.png'])fs.copyFileSync(path.join(root,file),path.join(out,file));
+for(const file of ['index.html','config.js','department-skills.js','department-skills.css','studio-core.js','curated-skills.js','github-rules.js','account-recovery.js','image-tool.js','nexus-ai.js','trending-snapshot.json','hero.jpg','logo.png'])fs.copyFileSync(path.join(root,file),path.join(out,file));
 console.log('Built public assets only. Netlify bundles functions separately.');
 // Separate, explicit demo entry. Never changes the production configuration.
 let demo=fs.readFileSync(path.join(root,'index.html'),'utf8');

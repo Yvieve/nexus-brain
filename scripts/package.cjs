@@ -7,7 +7,7 @@ import zipfile
 root=Path.cwd();dist=root/'dist';out=root.parent
 with zipfile.ZipFile(out/'nexus-demo-polished.zip','w',zipfile.ZIP_DEFLATED) as z:
  z.write(dist/'demo.html','index.html')
- for name in ['demo-config.js','department-skills.js','department-skills.css','studio-core.js','curated-skills.js','github-rules.js','account-recovery.js','image-tool.js','trending-snapshot.json','hero.jpg','logo.png']:z.write(dist/name,name)
+ for name in ['demo-config.js','department-skills.js','department-skills.css','studio-core.js','curated-skills.js','github-rules.js','account-recovery.js','image-tool.js','nexus-ai.js','trending-snapshot.json','hero.jpg','logo.png']:z.write(dist/name,name)
 with zipfile.ZipFile(out/'nexus-account-preview.zip','w',zipfile.ZIP_DEFLATED) as z:
  for p in dist.iterdir():
   if p.is_file():z.write(p,p.name)

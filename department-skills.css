@@ -9,3 +9,5 @@
 #nexusImageTool{margin:auto;width:min(620px,94vw);max-height:85vh;padding:25px;background:var(--panel-solid);color:var(--text);border:1px solid var(--border-strong);border-radius:var(--radius)}#nexusImageTool::backdrop{background:#07101caa;backdrop-filter:blur(4px)}#nexusImageTool label{display:block;margin:18px 0;font-size:13px}#nexusImageTool input,#nexusImageTool select{display:block;max-width:100%;margin-top:8px;background:var(--bg);color:var(--text);border:1px solid var(--border-strong);padding:10px;border-radius:8px}#niStatus{margin:18px 0;font-size:13px;line-height:1.9}#nexusImageTool [hidden]{display:none}
 
 #nsSaveReply[hidden]{display:none}
+
+.ns-knowledge-dialog{width:min(850px,94vw);max-height:85vh;overflow:auto;background:var(--panel-solid);color:var(--text);padding:24px;border:1px solid var(--border);border-radius:20px}.ns-knowledge-dialog::backdrop{background:#0009}#nkResult{white-space:pre-wrap;line-height:1.8;margin:18px 0}
