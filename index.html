@@ -437,6 +437,7 @@
   .block,.proactive{scroll-margin-top:86px}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link rel="stylesheet" href="department-skills.css">
 </head>
 <body id="top">
 
@@ -478,6 +479,7 @@
       <button class="btn primary" id="heroAskBtn">问 AI →</button>
       <a class="btn ghost" href="#app">浏览知识库</a>
     </div>
+    <div class="nexus-feature-links"><a class="btn ghost" href="#skill-discovery">每日 GitHub 精选</a><a class="btn ghost" href="#personal-studio">个人 Skill / Agent 工坊</a></div>
     <p class="hero-tag">知识不是整理出来的，而是在工作中自然生长。</p>
     <div class="user-banner" id="userBanner"></div>
   </div>
@@ -533,6 +535,24 @@
     <div class="items" id="items"></div>
   </div>
 </section>
+
+<section class="block reveal nexus-new-feature" id="skill-discovery"><div class="wrap">
+ <div class="app-head"><div><div class="kicker">发现工具</div><h2>GitHub 热门</h2><p class="lead">看看最近受到关注的 AI、Skill 和 Agent 项目。</p></div><a class="btn ghost" href="https://github.com/trending?since=weekly" target="_blank" rel="noopener noreferrer">查看完整周榜 ↗</a></div>
+ <div class="ns-toolbar"><input id="ndFilter" placeholder="搜索项目或用途" aria-label="搜索热门项目"><button class="btn" id="ndReload">刷新</button></div>
+ <p id="ndStatus" class="ns-status" role="status"></p><div id="ndResults" class="ns-repo-grid"></div>
+ <p class="hint">来源：GitHub Trending 周榜。仅保留名称或简介中与 AI 相关的项目，按原榜顺序展示。</p>
+</div></section>
+<section class="block reveal nexus-new-feature" id="personal-studio" style="background:var(--bg-2)"><div class="wrap">
+ <div class="app-head"><div><div class="kicker">我的助手</div><h2>创建我的 Skill / Agent</h2><p class="lead">说说你想完成什么工作，聊清楚后保存成自己的助手。</p></div><div class="ns-toolbar"><button class="btn" id="nsReloadRecords">刷新我的记录</button><button class="btn primary" id="nsNew">＋ 新对话</button></div></div>
+ <div class="ns-chat-intro"><span id="nsConnection">AI 尚未接入</span><button id="nsTryGuided" class="btn ghost">整理现有流程（问卷）</button></div><p id="nsStatus" class="ns-status" role="status">请使用右上角原有账号登录。</p>
+ <div class="ns-studio-grid"><aside class="panel"><h3>我的助手</h3><input id="nsSearch" placeholder="搜索我的 Skill / Agent" aria-label="搜索我的沉淀"><div id="nsList"></div></aside>
+ <div class="panel"><details id="nsSettings"><summary>名称与保存设置</summary><div class="ns-toolbar"><label>名称<input id="nsName" maxlength="120" placeholder="对话后可命名"></label><label>保存为<select id="nsKind"><option value="skill">Skill · 工作方法</option><option value="agent">Agent · 个人助手</option></select></label><label>部门<select id="nsDepartment"></select></label><select id="nsEngine" aria-label="对话模式"><option value="ai" selected>AI 对话</option><option value="guided">流程问卷（非 AI）</option></select></div></details><div id="nsMessages" class="ns-messages" role="log" aria-label="个人经验整理对话"></div>
+ <form id="nsChatForm"><label for="nsInput">本轮输入</label><textarea id="nsInput" maxlength="6000" placeholder="例如：帮我建立一个每周做投放复盘的助手。" required></textarea><div class="ns-toolbar"><button class="btn primary" id="nsSend">发送</button><button type="button" class="btn" id="nsImageTool">图片压缩</button><button type="button" class="btn" id="nsUndo">撤回上一轮</button></div></form>
+ <div class="ns-toolbar"><button class="btn primary" id="nsSummarize">生成并保存我的助手</button></div>
+ <details id="nsSavedResult"><summary>查看保存的指令</summary><p class="hint" id="nsProgress"></p><pre id="nsSummary" class="ns-summary">聊完后，这里会显示整理好的指令。</pre><div class="ns-toolbar"><button class="btn" id="nsCopy">复制指令</button><button class="btn" id="nsUse">试用模板</button><button class="btn" id="nsMarkdown">导出 Markdown</button><button class="btn" id="nsExport">导出 JSON</button></div></details>
+ <details id="nsMore"><summary>更多操作</summary><div class="ns-toolbar"><button class="btn" id="nsSave">保存设置</button><button class="btn" id="nsDelete">删除此助手</button></div></details>
+ </div></div>
+</div></section>
 
 <section class="block reveal" id="ai" style="background:var(--bg-2)">
   <div class="wrap">
@@ -644,13 +664,13 @@
 <div class="modal" id="loginModal"><div class="card-modal">
   <button class="icon-btn x2" id="closeLogin" aria-label="关闭">✕</button>
   <h2>进入 Nexus Brain</h2>
-  <div class="sub">用邮箱与密码登录；首次使用会以此邮箱创建账号，姓名仅作展示（可与其他人相同）。</div>
+  <div class="sub">用已有邮箱与密码登录。首次使用请明确选择注册；姓名仅作展示。</div>
   <div class="field"><label>邮箱（登录账号，唯一）</label><input id="loginEmail" type="email" placeholder="例如：linwei@company.com" autocomplete="off" /></div>
   <div class="field"><label>你的名字（展示用，可重复）</label><input id="loginName" placeholder="例如：林薇" autocomplete="off" /></div>
   <div class="field"><label>密码</label><input id="loginCode" type="password" placeholder="至少 6 位" autocomplete="off" /></div>
-  <div class="login-err" id="loginErr"></div>
-  <div class="modal-foot"><button class="btn primary" id="loginSubmit">进入 →</button></div>
-  <div class="hint-codes">首次使用即自动创建账号（邮箱 + 密码）。<br>姓名只是展示，可以和其他人相同；私人资料仅你本人可见，积分云端实时累计、按人隔离。</div>
+  <label class="ns-register"><input id="loginRegister" type="checkbox"> 首次使用，注册新账号</label><div class="login-err" id="loginErr"></div>
+  <div class="modal-foot"><button class="btn" id="forgotPassword" type="button">忘记密码</button><button class="btn primary" id="loginSubmit">进入 →</button></div>
+  <div class="hint-codes">登录失败不会自动创建账号。注册可能需要先完成邮箱验证。<br>姓名只是展示，可以和其他人相同；私人资料仅你本人可见，积分云端实时累计、按人隔离。</div>
 </div></div>
 
 <!-- UPLOAD MODAL -->
@@ -783,7 +803,7 @@ async function applyAuth(session){
   }
 }
 if(sb&&sb.auth){
-  try{ sb.auth.onAuthStateChange((_e,s)=>{ applyAuth(s); }); }catch(e){}
+  try{ sb.auth.onAuthStateChange((_e,s)=>{ if(_e==="PASSWORD_RECOVERY"){window.nexusRecoverySession=true;window.dispatchEvent(new Event("nexus-password-recovery"));} applyAuth(s); }); }catch(e){}
   try{ sb.auth.getSession().then(({data})=>applyAuth(data?data.session:null)).catch(()=>{}); }catch(e){}
 }
 
@@ -919,7 +939,7 @@ async function refreshUnanswered(){
 }
 async function load(){
   questions=JSON.parse(localStorage.getItem("nx-questions"))||[];
-  try{ await ensureDemoSeed(); }catch(e){ console.warn('seed failed',e); }
+  if(SUP.DEMO_SEED_ENABLED===true){try{ await ensureDemoSeed(); }catch(e){ console.warn('seed failed',e); }}
   await refreshItems();
   await refreshUnanswered();
   await refreshNotifications();
@@ -1043,7 +1063,7 @@ const loginBtn=document.getElementById("loginBtn");
 const loginModal=document.getElementById("loginModal");
 const userBanner=document.getElementById("userBanner");
 function openLogin(){loginModal.classList.add("open");setTimeout(()=>document.getElementById("loginName").focus(),60);}
-function closeLogin(){loginModal.classList.remove("open");document.getElementById("loginErr").textContent="";}
+function closeLogin(){document.getElementById("loginCode").value="";loginModal.classList.remove("open");document.getElementById("loginErr").textContent="";}
 function renderUser(){
   if(CURRENT_USER){loginBtn.textContent="👤 "+CURRENT_USER+" · 退出";loginBtn.onclick=logout;}
   else{loginBtn.textContent="登录";loginBtn.onclick=openLogin;}
@@ -1082,27 +1102,27 @@ async function loginAs(name){
 async function doLogin(){
   const email=document.getElementById("loginEmail").value.trim();
   const name=document.getElementById("loginName").value.trim();
-  const pw=document.getElementById("loginCode").value.trim();
+  const pw=document.getElementById("loginCode").value;
   const err=document.getElementById("loginErr");
   if(!email||!pw){err.textContent="请填写邮箱和密码";return;}
   if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){err.textContent="请输入有效邮箱";return;}
   if(pw.length<6){err.textContent="密码至少 6 位";return;}
   err.textContent="";
   try{
-    let {error}=await sb.auth.signInWithPassword({email,password:pw});
-    if(error){
-      if(/not found|Invalid login|Email not confirmed/i.test(error.message)){
-        const r=await sb.auth.signUp({email,password:pw,options:{data:{name:name||email.split('@')[0]}}});
-        if(r.error){err.textContent=r.error.message;return;}
-        if(r.data&&r.data.session){ applyAuth(r.data.session); closeLogin(); toast("已创建账号并登录"); return; }
-        err.textContent="账号已创建，请用同样的邮箱和密码再次点「进入」";return;
-      }
-      err.textContent=error.message;return;
+    if(document.getElementById("loginRegister").checked){
+      const r=await sb.auth.signUp({email,password:pw,options:{data:{name:name||email.split('@')[0]}}});
+      if(r.error){err.textContent=r.error.message;return;}
+      if(!r.data||(!r.data.user&&!r.data.session)){err.textContent="注册服务未返回有效账号，请检查网络、邮箱或稍后重试。";return;}
+      if(r.data&&r.data.session){await applyAuth(r.data.session);closeLogin();toast("注册成功并登录");return;}
+      err.textContent="注册请求已提交，请检查邮箱验证邮件，完成后取消注册选项再登录。";return;
     }
+    const {error}=await sb.auth.signInWithPassword({email,password:pw});
+    if(error){err.textContent=/Invalid login/i.test(error.message)?"邮箱或密码不正确，请重试；新用户请勾选注册。":error.message;return;}
     // 登录成功：同步展示名（姓名可重复，不影响身份）
     if(name){ try{ await sb.auth.updateUser({data:{name}}); }catch(e){} }
     const {data}=await sb.auth.getSession().catch(()=>({data:null}));
-    if(data&&data.session) applyAuth(data.session);
+    if(!data||!data.session){err.textContent="未获得有效登录会话，请检查邮箱验证和网络后重试。";return;}
+    await applyAuth(data.session);
     closeLogin();
   }catch(e){err.textContent="登录失败："+e.message;return;}
 }
@@ -1704,7 +1724,7 @@ document.getElementById("learnModal").addEventListener("click",e=>{ if(e.target=
   try{ await AI.ensureStats(); }catch(e){ console.warn('ai stats failed',e); }
   renderAISections();
   const u=localStorage.getItem("nx-user");
-  if(u){ CURRENT_USER=u; renderUser(); showPrivate(); await loginAs(u); }
+  // 身份仅从 Supabase Auth 恢复，不使用旧版 localStorage 昵称建立登录状态。
   try{const t=localStorage.getItem("nx-theme")||"dark";applyTheme(t);}catch(e){applyTheme("dark");}
   updateGameNav();
 })();
@@ -1841,5 +1861,14 @@ document.getElementById("learnModal").addEventListener("click",e=>{ if(e.target=
   if(!done){ setTimeout(function(){ if(wel) wel.classList.add("open"); }, 800); }
 })();
 </script>
+<dialog id="nsUseDialog"><div class="ns-dialog-header"><h3>试用我的指令模板</h3><button class="icon-btn" id="nsUseClose" aria-label="关闭">✕</button></div><p class="hint">仅在本地组合已保存指令与本次输入，不执行任务、不调用模型。之后转交其他服务前请确认数据范围。</p><label for="nsTask">本次任务输入</label><textarea id="nsTask" maxlength="10000"></textarea><button class="btn primary" id="nsPrepare">生成本次提示词</button><pre id="nsPrepared"></pre><button class="btn" id="nsTaskDownload" disabled>导出本次提示词</button></dialog>
+<div class="modal" id="passwordResetModal"><div class="card-modal"><h2>设置新密码</h2><p class="hint">通过邮件恢复身份后，在这里设置新密码。请勿分享邮件链接。</p><form id="passwordResetForm"><div class="field"><label>新密码</label><input id="newPassword" type="password" minlength="8" required autocomplete="new-password" /></div><div class="field"><label>再次输入新密码</label><input id="confirmPassword" type="password" minlength="8" required autocomplete="new-password" /></div><p id="passwordResetStatus" class="login-err" role="status"></p><div class="modal-foot"><button class="btn" type="button" id="cancelPasswordReset">取消</button><button class="btn primary" id="saveNewPassword">保存新密码</button></div></form></div></div>
+<script src="account-recovery.js"></script>
+<script src="studio-core.js"></script>
+<script src="github-rules.js"></script>
+<script src="curated-skills.js"></script>
+<script src="image-tool.js"></script>
+<script src="department-skills.js"></script>
+
 </body>
 </html>

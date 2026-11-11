@@ -1,0 +1,92 @@
+{
+  "ruleVersion": 3,
+  "day": "2026-11-11",
+  "generatedAt": "2026-11-11T10:50:19.300Z",
+  "source": "https://github.com/trending?since=weekly",
+  "period": "weekly",
+  "totalRanked": 13,
+  "items": [
+    {
+      "name": "NVIDIA/auto-ontology",
+      "url": "https://github.com/NVIDIA/auto-ontology",
+      "description": "Auto Ontology is a Python framework for building semantic, graph-based reasoning layers over data. It enables deterministic query generation, better context retrieval, and more explainable AI for LLM and agent workflows.",
+      "rank": 1,
+      "stars": 11648,
+      "weekStars": 9621,
+      "language": "Python"
+    },
+    {
+      "name": "anthropics/skills",
+      "url": "https://github.com/anthropics/skills",
+      "description": "Public repository for Agent Skills",
+      "rank": 2,
+      "stars": 192779,
+      "weekStars": 5014,
+      "language": "Python"
+    },
+    {
+      "name": "vercel-labs/agent-desktop",
+      "url": "https://github.com/vercel-labs/agent-desktop",
+      "description": "Computer use CLI for AI agents",
+      "rank": 3,
+      "stars": 21711,
+      "weekStars": 9502,
+      "language": "Rust"
+    },
+    {
+      "name": "vercel-labs/agent-browser",
+      "url": "https://github.com/vercel-labs/agent-browser",
+      "description": "Browser automation CLI for AI agents",
+      "rank": 5,
+      "stars": 49549,
+      "weekStars": 3606,
+      "language": "Rust"
+    },
+    {
+      "name": "cloudflare/security-audit-skill",
+      "url": "https://github.com/cloudflare/security-audit-skill",
+      "description": "A coding-agent skill for multi-phase security audits with independently verified, machine-readable findings",
+      "rank": 6,
+      "stars": 69790,
+      "weekStars": 10967,
+      "language": "JavaScript"
+    },
+    {
+      "name": "mattpocock/skills",
+      "url": "https://github.com/mattpocock/skills",
+      "description": "Skills for Real Engineers. Straight from my .agents directory.",
+      "rank": 7,
+      "stars": 321447,
+      "weekStars": 9872,
+      "language": "Shell"
+    },
+    {
+      "name": "Donchitos/Claude-Code-Game-Studios",
+      "url": "https://github.com/Donchitos/Claude-Code-Game-Studios",
+      "description": "Turn Claude Code into a full game dev studio — 49 AI agents, 72 workflow skills, and a complete coordination system mirroring real studio hierarchy.",
+      "rank": 10,
+      "stars": 38250,
+      "weekStars": 3730,
+      "language": "Shell"
+    },
+    {
+      "name": "google/skills",
+      "url": "https://github.com/google/skills",
+      "description": "Agent Skills for Google products and technologies",
+      "rank": 11,
+      "stars": 23850,
+      "weekStars": 2024,
+      "language": "Python"
+    },
+    {
+      "name": "herdrdev/herdr",
+      "url": "https://github.com/herdrdev/herdr",
+      "description": "the runtime your coding agents live on",
+      "rank": 13,
+      "stars": 50131,
+      "weekStars": 2196,
+      "language": "Rust"
+    }
+  ],
+  "method": "GitHub Trending 周榜公开页面，按名称/简介关键词保留 AI 相关项目，维持原榜名次；不是 GitHub 官方 AI 专榜。"
+}

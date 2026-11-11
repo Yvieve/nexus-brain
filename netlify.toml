@@ -1,10 +1,18 @@
 [build]
-  # Nexus Brain 是纯静态站点，无需构建步骤
-  command = ""
-  publish = "."
+  command = "node scripts/build.cjs"
+  publish = "dist"
 
-# SPA 回退：所有路径都返回 index.html（当前为单页应用）
+[build.environment]
+  NODE_VERSION = "22"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+
+[functions."github-daily"]
+  schedule = "10 1 * * *"
