@@ -1021,9 +1021,9 @@ function renderItems(){
     const img=it.type==="image"&&it.dataUrl?`<img class="img-thumb" src="${it.dataUrl}" alt="">`:"";
     const snippet=it.type==="image"?(it.content||"图片资料"):(it.summary||(it.content||"").slice(0,90));
     c.innerHTML=`<div class="top"><span class="dept-badge ${it.board===PRIV?'priv':''}">${icon} ${boardLabel}</span><span class="muted" style="font-size:12px">${rel(it.createdAt)}</span></div>
-      <h3>${it.title}${(it.tags&&it.tags.includes("示例"))?`<span class="demo-badge">示例</span>`:""}${it.version>1?`<span class="ver">v${it.version}</span>`:""}${AI.isExpired(it)?`<span class="exp-flag">⏰ 待复核</span>`:""}<span class="conf-chip" title="资料维护评分（规则计算，不代表内容正确率）（来源/更新时间/人工确认/使用次数）">🎯 ${AI.confidence(it)}%</span></h3>
-      <p>${snippet}</p>${img}
-      <div class="foot"><span class="owner"><span class="av">${(it.owner||"?").slice(0,1)}</span>${it.owner}</span><span>${it.type==="image"?"图片":it.type==="file"?"文件":(it.tags||[]).map(t=>"#"+t).join(" ")}</span></div>`;
+      <h3>${escapeXml(it.title)}${(it.tags&&it.tags.includes("示例"))?`<span class="demo-badge">示例</span>`:""}${it.version>1?`<span class="ver">v${it.version}</span>`:""}${AI.isExpired(it)?`<span class="exp-flag">⏰ 待复核</span>`:""}<span class="conf-chip" title="资料维护评分（规则计算，不代表内容正确率）（来源/更新时间/人工确认/使用次数）">🎯 ${AI.confidence(it)}%</span></h3>
+      <p>${escapeXml(snippet)}</p>${img}
+      <div class="foot"><span class="owner"><span class="av">${escapeXml((it.owner||"?").slice(0,1))}</span>${escapeXml(it.owner)}</span><span>${it.type==="image"?"图片":it.type==="file"?"文件":(it.tags||[]).map(t=>"#"+t).join(" ")}</span></div>`;
     c.onclick=()=>openItem(it);
     itemsEl.appendChild(c);
   });
@@ -1035,7 +1035,7 @@ function renderUnans(){
   unanswered.sort((a,b)=>b.at-a.at);
   unanswered.forEach(u=>{
     const d=document.createElement("div");d.className="ua";
-    d.innerHTML=`<div>❓ ${u.text}</div><div class="uam"><span>${u.by} · ${rel(u.at)}</span><span class="ans-btn" data-q="${encodeURIComponent(u.text)}">我来解答 →</span></div>`;
+    d.innerHTML=`<div>❓ ${escapeXml(u.text)}</div><div class="uam"><span>${escapeXml(u.by)} · ${rel(u.at)}</span><span class="ans-btn" data-q="${encodeURIComponent(u.text)}">我来解答 →</span></div>`;
     d.querySelector(".ans-btn").onclick=()=>openUploadWith(u.text);
     unansList.appendChild(d);
   });
@@ -1239,7 +1239,7 @@ function showDupConfirm(sim,onUpdate,onNew){
   confirmCard.innerHTML=`<button class="icon-btn x2" onclick="closeConfirm()">✕</button>
     <h2>检测到相似资料</h2>
     <div class="sub">文本相似度规则发现这份资料可能与已有内容重复。</div>
-    <div class="dup-note">已有：<b>《${it.title}》</b><br>上传人：${it.owner} · ${rel(it.createdAt)} · ${it.board==="__private__"?"私人":"公开"}</div>
+    <div class="dup-note">已有：<b>《${escapeXml(it.title)}》</b><br>上传人：${escapeXml(it.owner)} · ${rel(it.createdAt)} · ${it.board==="__private__"?"私人":"公开"}</div>
     <div class="modal-foot">
       <button class="btn" onclick="closeConfirm()">取消</button>
       <button class="btn" id="dupNew">作为新条目</button>
@@ -1259,7 +1259,7 @@ function showPromoteConfirm(it){
   confirmCard.innerHTML=`<button class="icon-btn x2" onclick="closeConfirm()">✕</button>
     <h2>共享建议</h2>
     <div class="sub">这条私人资料看起来对团队很有价值，是否共享到公共部门版块？</div>
-    <div class="dup-note">《${it.title}》命中了<b>流程类关键词</b>（含流程/规范/模板等）。</div>
+    <div class="dup-note">《${escapeXml(it.title)}》命中了<b>流程类关键词</b>（含流程/规范/模板等）。</div>
     <div class="field" style="margin-top:14px"><label>选择公共版块</label><select id="promBoard">${PUBLIC_BOARDS.map(b=>`<option>${b}</option>`).join("")}</select></div>
     <div class="modal-foot">
       <button class="btn" id="promSkip">暂不</button>
@@ -1281,7 +1281,7 @@ function openItem(it){
   if(it.type==="image"){bodyHtml=(it.content?`<p>${escapeXml(it.content)}</p>`:"")+`<img src="${it.dataUrl}" alt="">`;}
   else if(it.type==="file"){bodyHtml=`<p>${escapeXml(it.content||"").replace(/\n/g,"<br>")}</p><a class="file-link" href="${it.fileUrl}" target="_blank" rel="noopener" style="display:inline-block;margin-top:8px;padding:8px 12px;background:var(--accent,#2EE6C9);color:#04140f;border-radius:8px;font-weight:600;text-decoration:none">📥 下载 ${it.fileName||"文件"}</a>`;}
   else{bodyHtml=`<p>${escapeXml(it.content||it.summary||"（无正文）").replace(/\n/g,"<br>")}</p>`;}
-  bodyHtml+=`<p class="muted" style="font-size:12.5px;margin-top:14px">上传人：${it.owner} · 创建于 ${new Date(it.createdAt).toLocaleString()} · 更新于 ${new Date(it.updatedAt).toLocaleString()}</p>`;
+  bodyHtml+=`<p class="muted" style="font-size:12.5px;margin-top:14px">上传人：${escapeXml(it.owner)} · 创建于 ${new Date(it.createdAt).toLocaleString()} · 更新于 ${new Date(it.updatedAt).toLocaleString()}</p>`;
   document.getElementById("drawerBody").innerHTML=bodyHtml;
   const acts=document.getElementById("drawerActions");acts.innerHTML="";
   if(it.board===PRIV){const b=mkBtn("⬆️ 提升到公共区","primary",()=>{confirmCard.innerHTML=`<button class='icon-btn x2' onclick='closeConfirm()'>✕</button><h2>提升到公共区</h2><div class='field' style='margin-top:14px'><label>选择公共版块</label><select id='pb'>${PUBLIC_BOARDS.map(x=>`<option>${x}</option>`).join("")}</select></div><div class='modal-foot'><button class='btn' onclick='closeConfirm()'>取消</button><button class='btn primary' id='pbDo'>确认提升</button></div>`;confirmModal.classList.add("open");document.getElementById('pbDo').onclick=async ()=>{const bb=document.getElementById('pb').value;closeConfirm();await promoteItem(it,bb);await refreshItems();renderItems();closeDrawer();toast("已提升到公共版块："+bb);};});acts.appendChild(b);}
@@ -1526,7 +1526,7 @@ function renderAI(){
   const ce=document.getElementById("aiConfExample");
   if(ce){ if(ex){ const it=ex.i,p=ex.c;
       ce.innerHTML=`<div class="conf-show"><div class="conf-ring" style="--p:${p}"><b>${p}%</b><span>维护评分</span></div>
-        <div class="conf-meta">《${it.title}》<br><b>${p}%</b> 规则维护评分 · 来源 ${AI.usageOf(it.id)} 次被引用</div></div>
+        <div class="conf-meta">《${escapeXml(it.title)}》<br><b>${p}%</b> 规则维护评分 · 来源 ${AI.usageOf(it.id)} 次被引用</div></div>
         <div class="conf-list">
           <div class="conf-row"><span>来源数量</span><b>${AI.usageOf(it.id)} 次引用</b></div>
           <div class="conf-row"><span>最近更新</span><b>${rel(it.updatedAt||it.createdAt)}</b></div>
@@ -1568,10 +1568,10 @@ function renderTimeline(){
   const ev=[];
   items.forEach(i=>{ ev.push({t:`《${i.title}》创建`,m:rel(i.createdAt),type:i.board===PRIV?"":"",at:i.createdAt,id:i.id});
     if((i.version||1)>1) ev.push({t:`《${i.title}》更新至 v${i.version}`,m:rel(i.updatedAt),type:"",at:i.updatedAt,id:i.id}); });
-  unanswered.forEach(u=>ev.push({t:`收到待解答问题：「${u.text}」`,m:rel(u.at),type:"warn",at:u.at,id:null}));
+  unanswered.forEach(u=>ev.push({t:`收到待解答问题：「${escapeXml(u.text)}」`,m:rel(u.at),type:"warn",at:u.at,id:null}));
   notifications.slice(0,12).forEach(n=>ev.push({t:n.text,m:rel(n.at),type:"",at:n.at,id:null}));
   ev.sort((a,b)=>b.at-a.at);
-  box.innerHTML=ev.slice(0,40).map(e=>`<div class="tl-item ${e.type}"><div class="tt">${e.t}</div><div class="tm">${e.m}</div>${e.id?`<span class="ta" onclick="openItemById('${e.id}')">查看资料 →</span>`:""}</div>`).join("")||'<div class="empty-note">暂无事件。</div>';
+  box.innerHTML=ev.slice(0,40).map(e=>`<div class="tl-item ${e.type}"><div class="tt">${escapeXml(e.t)}</div><div class="tm">${e.m}</div>${e.id?`<span class="ta" onclick="openItemById('${e.id}')">查看资料 →</span>`:""}</div>`).join("")||'<div class="empty-note">暂无事件。</div>';
 }
 
 /* ===================== Knowledge Graph 渲染 ===================== */
